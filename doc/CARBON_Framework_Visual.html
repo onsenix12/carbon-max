@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The CARBON Framework</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e8f5e9 0%, #e3f2fd 50%, #f3e5f5 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 2.2rem;
+            color: #1a237e;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+        
+        .header .subtitle {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .header .subtitle .icon {
+            font-size: 1.8rem;
+        }
+        
+        .header .subtitle h2 {
+            font-size: 1.3rem;
+            color: #424242;
+            font-weight: 600;
+        }
+        
+        .header .tagline {
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        .journey-path {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            padding: 60px 20px 40px;
+            margin-top: 30px;
+        }
+        
+        .path-line {
+            position: absolute;
+            bottom: 120px;
+            left: 5%;
+            right: 5%;
+            height: 16px;
+            background: linear-gradient(90deg, 
+                #4caf50 0%, 
+                #8bc34a 20%, 
+                #ffeb3b 40%, 
+                #ff9800 60%, 
+                #2196f3 80%, 
+                #9c27b0 100%
+            );
+            border-radius: 8px;
+            z-index: 0;
+        }
+        
+        .stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 1;
+            flex: 1;
+            max-width: 200px;
+        }
+        
+        .question-bubble {
+            background: white;
+            border-radius: 16px;
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.85rem;
+            color: #333;
+            text-align: center;
+            line-height: 1.4;
+            min-height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 180px;
+        }
+        
+        .stage-circle {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+            margin-bottom: 15px;
+            position: relative;
+        }
+        
+        .stage-circle .letter {
+            font-size: 1.8rem;
+            line-height: 1;
+        }
+        
+        .stage-circle .name {
+            font-size: 0.65rem;
+            font-weight: 500;
+            margin-top: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stage:nth-child(1) .stage-circle { background: linear-gradient(135deg, #4caf50, #2e7d32); }
+        .stage:nth-child(2) .stage-circle { background: linear-gradient(135deg, #8bc34a, #558b2f); }
+        .stage:nth-child(3) .stage-circle { background: linear-gradient(135deg, #ffc107, #f57f17); }
+        .stage:nth-child(4) .stage-circle { background: linear-gradient(135deg, #ff9800, #e65100); }
+        .stage:nth-child(5) .stage-circle { background: linear-gradient(135deg, #2196f3, #1565c0); }
+        .stage:nth-child(6) .stage-circle { background: linear-gradient(135deg, #9c27b0, #6a1b9a); }
+        
+        .components {
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            padding: 15px;
+            width: 100%;
+            max-width: 180px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        
+        .component-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            color: #444;
+        }
+        
+        .component-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .component-item .icon {
+            font-size: 1rem;
+        }
+        
+        .stage-description {
+            font-size: 0.75rem;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .output-label {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+            font-size: 0.7rem;
+            color: #888;
+            text-align: center;
+        }
+        
+        .output-label strong {
+            color: #555;
+            display: block;
+            font-size: 0.75rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 16px;
+        }
+        
+        .footer h3 {
+            color: #1a237e;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+        }
+        
+        .footer p {
+            color: #666;
+            font-size: 0.9rem;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .application-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #1a237e, #3949ab);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-top: 15px;
+        }
+        
+        @media (max-width: 1200px) {
+            .journey-path {
+                flex-wrap: wrap;
+                gap: 30px;
+                justify-content: center;
+            }
+            
+            .path-line {
+                display: none;
+            }
+            
+            .stage {
+                max-width: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>The CARBON Framework</h1>
+            <div class="subtitle">
+                <span class="icon">🎯</span>
+                <h2>A Problem-First Solution Journey</h2>
+            </div>
+            <p class="tagline">Trace the path from strategic gap to differentiated product</p>
+        </div>
+        
+        <div class="journey-path">
+            <div class="path-line"></div>
+            
+            <!-- C - Context -->
+            <div class="stage">
+                <div class="question-bubble">
+                    What gap exists between current state and potential?
+                </div>
+                <div class="stage-circle">
+                    <span class="letter">C</span>
+                    <span class="name">Context</span>
+                </div>
+                <div class="components">
+                    <div class="component-item">
+                        <span class="icon">🔍</span>
+                        <span>Performance Paradox</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">📊</span>
+                        <span>Competitive Benchmark</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">⚡</span>
+                        <span>Forcing Functions</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">⚖️</span>
+                        <span>Stakes Matrix</span>
+                    </div>
+                    <div class="output-label">
+                        <strong>OUTPUT</strong>
+                        Problem Statement
+                    </div>
+                </div>
+                <p class="stage-description">Discover the strategic gap</p>
+            </div>
+            
+            <!-- A - Assets -->
+            <div class="stage">
+                <div class="question-bubble">
+                    What unique resources can we leverage?
+                </div>
+                <div class="stage-circle">
+                    <span class="letter">A</span>
+                    <span class="name">Assets</span>
+                </div>
+                <div class="components">
+                    <div class="component-item">
+                        <span class="icon">💾</span>
+                        <span>Data Asset Inventory</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">🏗️</span>
+                        <span>Infrastructure Map</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">🎯</span>
+                        <span>Position Advantage</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">🔧</span>
+                        <span>Capability Gaps</span>
+                    </div>
+                    <div class="output-label">
+                        <strong>OUTPUT</strong>
+                        Unfair Advantage Map
+                    </div>
+                </div>
+                <p class="stage-description">Inventory unique advantages</p>
+            </div>
+            
+            <!-- R - Recipients -->
+            <div class="stage">
+                <div class="question-bubble">
+                    Who are we solving for, and what matters to them?
+                </div>
+                <div class="stage-circle">
+                    <span class="letter">R</span>
+                    <span class="name">Recipients</span>
+                </div>
+                <div class="components">
+                    <div class="component-item">
+                        <span class="icon">👥</span>
+                        <span>Segment Identification</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">💭</span>
+                        <span>Needs vs. Wants</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">🏆</span>
+                        <span>Success Definition</span>
+                    </div>
+                    <div class="output-label">
+                        <strong>OUTPUT</strong>
+                        Customer Segments
+                    </div>
+                </div>
+                <p class="stage-description">Identify who we serve</p>
+            </div>
+            
+            <!-- B - Behaviors -->
+            <div class="stage">
+                <div class="question-bubble">
+                    What do they experience today vs. what they need?
+                </div>
+                <div class="stage-circle">
+                    <span class="letter">B</span>
+                    <span class="name">Behaviors</span>
+                </div>
+                <div class="components">
+                    <div class="component-item">
+                        <span class="icon">🗺️</span>
+                        <span>Journey Mapping</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">💡</span>
+                        <span>Pain-to-Opportunity</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">📍</span>
+                        <span>Touchpoint Inventory</span>
+                    </div>
+                    <div class="output-label">
+                        <strong>OUTPUT</strong>
+                        Journey Maps
+                    </div>
+                </div>
+                <p class="stage-description">Map current experiences</p>
+            </div>
+            
+            <!-- O - Offerings -->
+            <div class="stage">
+                <div class="question-bubble">
+                    What solutions address their specific needs?
+                </div>
+                <div class="stage-circle">
+                    <span class="letter">O</span>
+                    <span class="name">Offerings</span>
+                </div>
+                <div class="components">
+                    <div class="component-item">
+                        <span class="icon">🏛️</span>
+                        <span>Solution Pillars</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">⚙️</span>
+                        <span>Feature Mapping</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">🎖️</span>
+                        <span>Differentiation Matrix</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">🤝</span>
+                        <span>Build/Buy/Partner</span>
+                    </div>
+                    <div class="output-label">
+                        <strong>OUTPUT</strong>
+                        Solution Architecture
+                    </div>
+                </div>
+                <p class="stage-description">Design the solution</p>
+            </div>
+            
+            <!-- N - Next -->
+            <div class="stage">
+                <div class="question-bubble">
+                    How do we build, measure, and evolve?
+                </div>
+                <div class="stage-circle">
+                    <span class="letter">N</span>
+                    <span class="name">Next</span>
+                </div>
+                <div class="components">
+                    <div class="component-item">
+                        <span class="icon">📅</span>
+                        <span>Phased Roadmap</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">📈</span>
+                        <span>Success Metrics</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">⚠️</span>
+                        <span>Risk Register</span>
+                    </div>
+                    <div class="component-item">
+                        <span class="icon">🚀</span>
+                        <span>Evolution Path</span>
+                    </div>
+                    <div class="output-label">
+                        <strong>OUTPUT</strong>
+                        Roadmap & Metrics
+                    </div>
+                </div>
+                <p class="stage-description">Plan the execution</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <h3>Framework Principles</h3>
+            <p>
+                <strong>Problem before solution</strong> — C and R come before O &nbsp;|&nbsp;
+                <strong>Assets inform differentiation</strong> — A shapes what makes O unique &nbsp;|&nbsp;
+                <strong>Journeys reveal interventions</strong> — B identifies where O should intervene &nbsp;|&nbsp;
+                <strong>Measure what matters</strong> — N connects back to C
+            </p>
+            <div class="application-badge">
+                <span>✈️</span>
+                <span>Applied to: Changi Airport Carbon Calculator</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

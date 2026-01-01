@@ -1,0 +1,211 @@
+{
+  "routes": [
+    {
+      "id": "SIN-LHR",
+      "origin": "SIN",
+      "destination": "LHR",
+      "destination_city": "London",
+      "destination_country": "United Kingdom",
+      "distance_km": 10850,
+      "aircraft_efficiency_rating": "A",
+      "typical_aircraft": ["Boeing 777-300ER", "Airbus A350-900"],
+      "saf_availability": {
+        "available": true,
+        "provider": "Neste Singapore",
+        "blend_percentage": 30,
+        "book_and_claim": true,
+        "notes": "SAF available through book-and-claim system"
+      },
+      "methodology": {
+        "source": "IATA Carbon Offset Program",
+        "year": 2023,
+        "citation": "IATA. (2023). Carbon Offset Program Methodology. International Air Transport Association.",
+        "calculation_method": "Distance-based with aircraft-specific factors"
+      }
+    },
+    {
+      "id": "SIN-JFK",
+      "origin": "SIN",
+      "destination": "JFK",
+      "destination_city": "New York",
+      "destination_country": "United States",
+      "distance_km": 15350,
+      "aircraft_efficiency_rating": "A",
+      "typical_aircraft": ["Airbus A350-900", "Boeing 777-300ER"],
+      "saf_availability": {
+        "available": true,
+        "provider": "Shell SAF",
+        "blend_percentage": 25,
+        "book_and_claim": true,
+        "notes": "Imported SAF available via book-and-claim"
+      },
+      "methodology": {
+        "source": "IATA Carbon Offset Program",
+        "year": 2023,
+        "citation": "IATA. (2023). Carbon Offset Program Methodology. International Air Transport Association.",
+        "calculation_method": "Distance-based with aircraft-specific factors"
+      }
+    },
+    {
+      "id": "SIN-NRT",
+      "origin": "SIN",
+      "destination": "NRT",
+      "destination_city": "Tokyo",
+      "destination_country": "Japan",
+      "distance_km": 5350,
+      "aircraft_efficiency_rating": "B",
+      "typical_aircraft": ["Boeing 787-9", "Airbus A330-300"],
+      "saf_availability": {
+        "available": true,
+        "provider": "Neste Singapore",
+        "blend_percentage": 20,
+        "book_and_claim": true,
+        "notes": "Regional route with SAF availability"
+      },
+      "methodology": {
+        "source": "IATA Carbon Offset Program",
+        "year": 2023,
+        "citation": "IATA. (2023). Carbon Offset Program Methodology. International Air Transport Association.",
+        "calculation_method": "Distance-based with aircraft-specific factors"
+      }
+    },
+    {
+      "id": "SIN-SYD",
+      "origin": "SIN",
+      "destination": "SYD",
+      "destination_city": "Sydney",
+      "destination_country": "Australia",
+      "distance_km": 6300,
+      "aircraft_efficiency_rating": "A",
+      "typical_aircraft": ["Airbus A350-900", "Boeing 777-300ER"],
+      "saf_availability": {
+        "available": true,
+        "provider": "Neste Singapore",
+        "blend_percentage": 30,
+        "book_and_claim": true,
+        "notes": "SAF available through book-and-claim system"
+      },
+      "methodology": {
+        "source": "IATA Carbon Offset Program",
+        "year": 2023,
+        "citation": "IATA. (2023). Carbon Offset Program Methodology. International Air Transport Association.",
+        "calculation_method": "Distance-based with aircraft-specific factors"
+      }
+    },
+    {
+      "id": "SIN-DXB",
+      "origin": "SIN",
+      "destination": "DXB",
+      "destination_city": "Dubai",
+      "destination_country": "United Arab Emirates",
+      "distance_km": 5850,
+      "aircraft_efficiency_rating": "B",
+      "typical_aircraft": ["Boeing 777-300ER", "Airbus A380"],
+      "saf_availability": {
+        "available": false,
+        "provider": null,
+        "blend_percentage": 0,
+        "book_and_claim": false,
+        "notes": "SAF not yet available on this route"
+      },
+      "methodology": {
+        "source": "IATA Carbon Offset Program",
+        "year": 2023,
+        "citation": "IATA. (2023). Carbon Offset Program Methodology. International Air Transport Association.",
+        "calculation_method": "Distance-based with aircraft-specific factors"
+      }
+    },
+    {
+      "id": "SIN-BKK",
+      "origin": "SIN",
+      "destination": "BKK",
+      "destination_city": "Bangkok",
+      "destination_country": "Thailand",
+      "distance_km": 1430,
+      "aircraft_efficiency_rating": "C",
+      "typical_aircraft": ["Boeing 737-800", "Airbus A320"],
+      "saf_availability": {
+        "available": true,
+        "provider": "Neste Singapore",
+        "blend_percentage": 15,
+        "book_and_claim": true,
+        "notes": "Short-haul route with limited SAF availability"
+      },
+      "methodology": {
+        "source": "IATA Carbon Offset Program",
+        "year": 2023,
+        "citation": "IATA. (2023). Carbon Offset Program Methodology. International Air Transport Association.",
+        "calculation_method": "Distance-based with aircraft-specific factors"
+      }
+    },
+    {
+      "id": "SIN-HKG",
+      "origin": "SIN",
+      "destination": "HKG",
+      "destination_city": "Hong Kong",
+      "destination_country": "China",
+      "distance_km": 2580,
+      "aircraft_efficiency_rating": "B",
+      "typical_aircraft": ["Boeing 777-300ER", "Airbus A330-300"],
+      "saf_availability": {
+        "available": true,
+        "provider": "Neste Singapore",
+        "blend_percentage": 20,
+        "book_and_claim": true,
+        "notes": "Regional route with SAF availability"
+      },
+      "methodology": {
+        "source": "IATA Carbon Offset Program",
+        "year": 2023,
+        "citation": "IATA. (2023). Carbon Offset Program Methodology. International Air Transport Association.",
+        "calculation_method": "Distance-based with aircraft-specific factors"
+      }
+    },
+    {
+      "id": "SIN-KUL",
+      "origin": "SIN",
+      "destination": "KUL",
+      "destination_city": "Kuala Lumpur",
+      "destination_country": "Malaysia",
+      "distance_km": 320,
+      "aircraft_efficiency_rating": "C",
+      "typical_aircraft": ["Boeing 737-800", "Airbus A320"],
+      "saf_availability": {
+        "available": false,
+        "provider": null,
+        "blend_percentage": 0,
+        "book_and_claim": false,
+        "notes": "Very short-haul route, SAF not yet available"
+      },
+      "methodology": {
+        "source": "IATA Carbon Offset Program",
+        "year": 2023,
+        "citation": "IATA. (2023). Carbon Offset Program Methodology. International Air Transport Association.",
+        "calculation_method": "Distance-based with aircraft-specific factors"
+      }
+    }
+  ],
+  "aircraft_efficiency_ratings": {
+    "A": {
+      "description": "Most efficient modern aircraft",
+      "examples": ["Airbus A350-900", "Boeing 787-9"],
+      "efficiency_factor": 0.85
+    },
+    "B": {
+      "description": "Moderately efficient aircraft",
+      "examples": ["Boeing 777-300ER", "Airbus A330-300"],
+      "efficiency_factor": 1.0
+    },
+    "C": {
+      "description": "Standard efficiency aircraft",
+      "examples": ["Boeing 737-800", "Airbus A320"],
+      "efficiency_factor": 1.15
+    }
+  },
+  "metadata": {
+    "last_updated": "2024-01-15",
+    "source": "IATA Carbon Offset Program, Changi Airport Group",
+    "citation": "IATA. (2023). Carbon Offset Program Methodology. International Air Transport Association. Changi Airport Group. (2024). Route and SAF Availability Data."
+  }
+}
+

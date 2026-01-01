@@ -1,0 +1,111 @@
+{
+  "providers": [
+    {
+      "id": "neste_singapore",
+      "name": "Neste Singapore",
+      "location": "Singapore",
+      "feedstock_type": "waste-based",
+      "feedstock_sources": [
+        "Used cooking oil",
+        "Municipal waste",
+        "Agricultural residues"
+      ],
+      "production_capacity_annual_liters": 1000000000,
+      "emissions_reduction_percent": 90,
+      "certification": [
+        "ISCC (International Sustainability and Carbon Certification)",
+        "RSB (Roundtable on Sustainable Biomaterials)"
+      ],
+      "book_and_claim_available": true,
+      "description": "Neste operates a world-class renewable products refinery in Singapore, producing sustainable aviation fuel from waste and residue raw materials.",
+      "source": {
+        "name": "Neste Corporation",
+        "citation": "Neste. (2024). Neste Singapore Refinery. Retrieved from https://www.neste.com/companies/neste-singapore",
+        "year": 2024
+      }
+    },
+    {
+      "id": "shell_saf",
+      "name": "Shell SAF",
+      "location": "Imported",
+      "feedstock_type": "mixed",
+      "feedstock_sources": [
+        "Waste-based feedstocks",
+        "Certified sustainable biomass"
+      ],
+      "production_capacity_annual_liters": 500000000,
+      "emissions_reduction_percent": 75,
+      "certification": [
+        "ISCC",
+        "RSB"
+      ],
+      "book_and_claim_available": true,
+      "description": "Shell provides sustainable aviation fuel through its global supply chain, available via book-and-claim system for airlines operating from Singapore.",
+      "source": {
+        "name": "Shell Aviation",
+        "citation": "Shell. (2024). Shell Sustainable Aviation Fuel. Retrieved from https://www.shell.com/aviation/sustainable-aviation-fuel",
+        "year": 2024
+      }
+    }
+  ],
+  "book_and_claim_explainer": {
+    "title": "What is Book-and-Claim?",
+    "content": "Book-and-Claim is a chain-of-custody model that allows airlines and passengers to claim the environmental benefits of Sustainable Aviation Fuel (SAF) even when the physical fuel is not used on their specific flight. Here's how it works:\n\n1. **Production**: SAF is produced at a certified facility (e.g., Neste Singapore refinery)\n2. **Certification**: The SAF receives sustainability certificates proving its environmental attributes\n3. **Separation**: The physical fuel and its environmental attributes are separated\n4. **Booking**: Airlines or passengers 'book' the environmental attributes (carbon reduction)\n5. **Claim**: The booked attributes are claimed against specific flights, even if the physical SAF was used elsewhere\n\nThis system enables SAF benefits to be applied to flights where physical SAF blending may not be logistically feasible, while ensuring the environmental benefits are properly tracked and not double-counted.",
+    "benefits": [
+      "Enables SAF benefits on routes where physical blending isn't possible",
+      "Maintains rigorous tracking to prevent double-counting",
+      "Supports global SAF market development",
+      "Allows passengers to contribute to SAF adoption"
+    ],
+    "certification": {
+      "standards": [
+        "ISCC (International Sustainability and Carbon Certification)",
+        "RSB (Roundtable on Sustainable Biomaterials)",
+        "ASTM D7566 (SAF blending standard)"
+      ],
+      "source": {
+        "name": "IATA Book-and-Claim",
+        "citation": "IATA. (2023). Book-and-Claim for Sustainable Aviation Fuel. International Air Transport Association.",
+        "year": 2023
+      }
+    }
+  },
+  "singapore_mandate": {
+    "title": "Singapore SAF Mandate",
+    "effective_date": "2026-01-01",
+    "targets": [
+      {
+        "year": 2026,
+        "saf_blend_percent": 1,
+        "description": "1% SAF blend requirement for all flights departing Singapore"
+      },
+      {
+        "year": 2030,
+        "saf_blend_percent": 3,
+        "description": "3% SAF blend requirement target"
+      },
+      {
+        "year": 2050,
+        "saf_blend_percent": 50,
+        "description": "Long-term target aligned with net-zero aviation goals"
+      }
+    ],
+    "scope": "All commercial flights departing from Singapore Changi Airport",
+    "compliance": {
+      "mechanism": "Book-and-Claim system accepted for compliance",
+      "certification_required": true,
+      "reporting_required": true
+    },
+    "source": {
+      "name": "Civil Aviation Authority of Singapore",
+      "citation": "Civil Aviation Authority of Singapore (CAAS). (2023). Singapore Sustainable Air Hub Blueprint. CAAS.",
+      "year": 2023,
+      "url": "https://www.caas.gov.sg/public-passengers/aviation-sustainability/sustainable-air-hub-blueprint"
+    }
+  },
+  "metadata": {
+    "last_updated": "2024-01-15",
+    "notes": "SAF availability and mandate information based on Singapore's Sustainable Air Hub Blueprint and current industry standards."
+  }
+}
+

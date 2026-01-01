@@ -1,0 +1,296 @@
+{
+  "merchants": [
+    {
+      "id": "louis_vuitton",
+      "name": "Louis Vuitton",
+      "category": "luxury_fashion",
+      "terminal": ["T1", "T2", "T3", "Jewel"],
+      "carbon_score": 6,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Sustainable materials sourcing",
+        "Carbon-neutral shipping",
+        "Repair and refurbishment program"
+      ],
+      "eco_points_multiplier": 1.2,
+      "source": {
+        "name": "Louis Vuitton Sustainability Report 2023",
+        "citation": "LVMH. (2023). Louis Vuitton Sustainability Report 2023. LVMH Group.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "hermes",
+      "name": "Hermès",
+      "category": "luxury_fashion",
+      "terminal": ["T1", "T3"],
+      "carbon_score": 7,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Artisan craftsmanship focus",
+        "Sustainable leather sourcing",
+        "Long-lasting product design"
+      ],
+      "eco_points_multiplier": 1.3,
+      "source": {
+        "name": "Hermès Annual Report 2023",
+        "citation": "Hermès. (2023). Hermès Annual Report 2023 - Sustainability Section. Hermès International.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "chanel",
+      "name": "Chanel",
+      "category": "luxury_fashion",
+      "terminal": ["T1", "T2", "T3"],
+      "carbon_score": 8,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Mission 1.5° climate commitment",
+        "100% renewable energy in operations",
+        "Sustainable packaging initiatives"
+      ],
+      "eco_points_multiplier": 1.5,
+      "source": {
+        "name": "Chanel Mission 1.5° Report 2023",
+        "citation": "Chanel. (2023). Mission 1.5° Climate Report 2023. Chanel Inc.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "dior",
+      "name": "Dior",
+      "category": "luxury_fashion",
+      "terminal": ["T1", "T3"],
+      "carbon_score": 7,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Sustainable materials",
+        "Carbon reduction targets",
+        "Circular economy initiatives"
+      ],
+      "eco_points_multiplier": 1.3,
+      "source": {
+        "name": "LVMH Sustainability Report 2023",
+        "citation": "LVMH. (2023). LVMH Sustainability Report 2023. LVMH Group.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "gucci",
+      "name": "Gucci",
+      "category": "luxury_fashion",
+      "terminal": ["T1", "T2"],
+      "carbon_score": 9,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Carbon-neutral operations",
+        "Circular luxury program",
+        "100% renewable energy",
+        "Sustainable materials commitment"
+      ],
+      "eco_points_multiplier": 1.8,
+      "source": {
+        "name": "Gucci Equilibrium Impact Report 2023",
+        "citation": "Gucci. (2023). Gucci Equilibrium Impact Report 2023. Kering Group.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "prada",
+      "name": "Prada",
+      "category": "luxury_fashion",
+      "terminal": ["T1", "T3"],
+      "carbon_score": 7,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Re-Nylon program",
+        "Sustainable materials",
+        "Carbon reduction targets"
+      ],
+      "eco_points_multiplier": 1.3,
+      "source": {
+        "name": "Prada Group Sustainability Report 2023",
+        "citation": "Prada Group. (2023). Prada Group Sustainability Report 2023. Prada S.p.A.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "burberry",
+      "name": "Burberry",
+      "category": "luxury_fashion",
+      "terminal": ["T1", "T2", "T3"],
+      "carbon_score": 8,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Carbon-neutral operations",
+        "Regenerative agriculture",
+        "Circular design principles"
+      ],
+      "eco_points_multiplier": 1.5,
+      "source": {
+        "name": "Burberry Responsibility Report 2023",
+        "citation": "Burberry. (2023). Burberry Responsibility Report 2023. Burberry Group plc.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "tiffany",
+      "name": "Tiffany & Co.",
+      "category": "luxury_jewelry",
+      "terminal": ["T1", "T3"],
+      "carbon_score": 7,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Responsible sourcing",
+        "Sustainable mining practices",
+        "Carbon reduction program"
+      ],
+      "eco_points_multiplier": 1.3,
+      "source": {
+        "name": "Tiffany & Co. Sustainability Report 2023",
+        "citation": "Tiffany & Co. (2023). Tiffany & Co. Sustainability Report 2023. LVMH Group.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "cartier",
+      "name": "Cartier",
+      "category": "luxury_jewelry",
+      "terminal": ["T1", "T2", "T3"],
+      "carbon_score": 8,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Responsible sourcing",
+        "Carbon-neutral operations",
+        "Sustainable packaging"
+      ],
+      "eco_points_multiplier": 1.5,
+      "source": {
+        "name": "Cartier Sustainability Report 2023",
+        "citation": "Cartier. (2023). Cartier Sustainability Report 2023. Richemont Group.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "rolex",
+      "name": "Rolex",
+      "category": "luxury_watches",
+      "terminal": ["T1", "T2", "T3"],
+      "carbon_score": 6,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Long-lasting product design",
+        "Sustainable manufacturing",
+        "Environmental protection initiatives"
+      ],
+      "eco_points_multiplier": 1.2,
+      "source": {
+        "name": "Rolex Perpetual Planet Initiative",
+        "citation": "Rolex. (2023). Rolex Perpetual Planet Initiative. Rolex SA.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "omega",
+      "name": "Omega",
+      "category": "luxury_watches",
+      "terminal": ["T1", "T3"],
+      "carbon_score": 7,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Sustainable materials",
+        "Carbon reduction targets",
+        "Ocean conservation partnership"
+      ],
+      "eco_points_multiplier": 1.3,
+      "source": {
+        "name": "Swatch Group Sustainability Report 2023",
+        "citation": "Swatch Group. (2023). Swatch Group Sustainability Report 2023. The Swatch Group Ltd.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "starbucks",
+      "name": "Starbucks",
+      "category": "food_beverage",
+      "terminal": ["T1", "T2", "T3", "T4", "Jewel"],
+      "carbon_score": 8,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Cup-as-a-Service program",
+        "Plant-based options",
+        "Carbon-neutral goal by 2030",
+        "Sustainable coffee sourcing"
+      ],
+      "eco_points_multiplier": 1.5,
+      "source": {
+        "name": "Starbucks Global Environmental & Social Impact Report 2023",
+        "citation": "Starbucks. (2023). Starbucks Global Environmental & Social Impact Report 2023. Starbucks Corporation.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "coffee_bean",
+      "name": "Coffee Bean & Tea Leaf",
+      "category": "food_beverage",
+      "terminal": ["T1", "T2", "T3"],
+      "carbon_score": 6,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Sustainable sourcing",
+        "Reusable cup program"
+      ],
+      "eco_points_multiplier": 1.2,
+      "source": {
+        "name": "Coffee Bean & Tea Leaf Sustainability Initiatives",
+        "citation": "Coffee Bean & Tea Leaf. (2023). Sustainability Initiatives. The Coffee Bean & Tea Leaf.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "ya_kun",
+      "name": "Ya Kun Kaya Toast",
+      "category": "food_beverage",
+      "terminal": ["T1", "T2", "T3", "T4"],
+      "carbon_score": 5,
+      "carbon_score_max": 10,
+      "sustainability_initiatives": [
+        "Local sourcing",
+        "Waste reduction programs"
+      ],
+      "eco_points_multiplier": 1.0,
+      "source": {
+        "name": "Ya Kun Kaya Toast Corporate Information",
+        "citation": "Ya Kun Kaya Toast. (2023). Corporate Sustainability. Ya Kun International Pte Ltd.",
+        "year": 2023
+      }
+    }
+  ],
+  "carbon_score_methodology": {
+    "description": "Carbon scores are calculated based on multiple factors including: carbon emissions, sustainable materials usage, circular economy initiatives, renewable energy adoption, and third-party certifications.",
+    "factors": [
+      "Scope 1, 2, and 3 emissions",
+      "Sustainable materials percentage",
+      "Renewable energy usage",
+      "Waste reduction and circularity",
+      "Third-party sustainability certifications",
+      "Supply chain sustainability"
+    ],
+    "scale": {
+      "min": 1,
+      "max": 10,
+      "description": "Scores range from 1 (lowest) to 10 (highest sustainability performance)"
+    },
+    "source": {
+      "name": "Changi Airport Merchant Sustainability Assessment",
+      "citation": "Changi Airport Group. (2024). Merchant Sustainability Assessment Framework. Changi Airport Group Sustainability Department.",
+      "year": 2024
+    }
+  },
+  "metadata": {
+    "last_updated": "2024-01-15",
+    "notes": "Carbon scores are assessed annually and may change based on merchant sustainability performance. Eco-Points multipliers are applied to purchases at merchants with higher carbon scores."
+  }
+}
+

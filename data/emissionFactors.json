@@ -1,0 +1,120 @@
+{
+  "radiative_forcing": {
+    "multiplier": 1.9,
+    "explanation": "Radiative forcing accounts for the additional warming effects of aviation emissions at altitude, including contrails and cirrus cloud formation. This multiplier is applied to CO2 emissions to reflect the total climate impact.",
+    "source": "Lee, D.S., et al. (2021)",
+    "citation": "Lee, D.S., Fahey, D.W., Skowron, A., Allen, M.R., Burkhardt, U., Chen, Q., Doherty, S.J., Freeman, S., Forster, P.M., Fuglestvedt, J., Gettelman, A., De León, R.R., Lim, L.L., Lund, M.T., Millar, R.J., Owen, B., Penner, J.E., Pitari, G., Prather, M.J., Sausen, R., & Wilcox, L.J. (2021). The contribution of global aviation to anthropogenic climate forcing for 2000 to 2018. Atmospheric Environment, 244, 117834.",
+    "year": 2021
+  },
+  "factors": {
+    "aviation_fuel": {
+      "co2_per_liter": 2.52,
+      "unit": "kg CO2e per liter",
+      "uncertainty_range_percent": 5,
+      "source": "DEFRA 2023",
+      "citation": "Department for Environment, Food & Rural Affairs (DEFRA). (2023). Greenhouse gas reporting: conversion factors 2023. UK Government.",
+      "year": 2023,
+      "notes": "Includes CO2 emissions from jet fuel combustion"
+    },
+    "saf_waste_based": {
+      "co2_per_liter": 0.25,
+      "unit": "kg CO2e per liter",
+      "uncertainty_range_percent": 15,
+      "source": "IATA",
+      "citation": "International Air Transport Association (IATA). (2023). Sustainable Aviation Fuel (SAF) Lifecycle Assessment. IATA Environmental Programs.",
+      "year": 2023,
+      "notes": "Waste-based SAF (e.g., used cooking oil, municipal waste) with up to 90% lifecycle emissions reduction compared to conventional jet fuel"
+    },
+    "saf_imported": {
+      "co2_per_liter": 0.50,
+      "unit": "kg CO2e per liter",
+      "uncertainty_range_percent": 20,
+      "source": "IATA",
+      "citation": "International Air Transport Association (IATA). (2023). Sustainable Aviation Fuel (SAF) Lifecycle Assessment. IATA Environmental Programs.",
+      "year": 2023,
+      "notes": "Imported SAF accounting for transportation emissions, typically 70-80% lifecycle emissions reduction"
+    },
+    "ground_transport_taxi": {
+      "co2_per_km": 0.171,
+      "unit": "kg CO2e per km",
+      "uncertainty_range_percent": 10,
+      "source": "DEFRA 2023",
+      "citation": "Department for Environment, Food & Rural Affairs (DEFRA). (2023). Greenhouse gas reporting: conversion factors 2023. UK Government.",
+      "year": 2023,
+      "notes": "Average taxi emissions per passenger km"
+    },
+    "ground_transport_private_car": {
+      "co2_per_km": 0.171,
+      "unit": "kg CO2e per km",
+      "uncertainty_range_percent": 10,
+      "source": "DEFRA 2023",
+      "citation": "Department for Environment, Food & Rural Affairs (DEFRA). (2023). Greenhouse gas reporting: conversion factors 2023. UK Government.",
+      "year": 2023,
+      "notes": "Average private car emissions per passenger km"
+    },
+    "ground_transport_public_transit": {
+      "co2_per_km": 0.041,
+      "unit": "kg CO2e per km",
+      "uncertainty_range_percent": 8,
+      "source": "DEFRA 2023",
+      "citation": "Department for Environment, Food & Rural Affairs (DEFRA). (2023). Greenhouse gas reporting: conversion factors 2023. UK Government.",
+      "year": 2023,
+      "notes": "Average public transit emissions per passenger km"
+    },
+    "waste_landfill": {
+      "co2_per_kg": 0.5,
+      "unit": "kg CO2e per kg waste",
+      "uncertainty_range_percent": 25,
+      "source": "DEFRA 2023",
+      "citation": "Department for Environment, Food & Rural Affairs (DEFRA). (2023). Greenhouse gas reporting: conversion factors 2023. UK Government.",
+      "year": 2023,
+      "notes": "Methane emissions from landfill decomposition"
+    },
+    "waste_incineration": {
+      "co2_per_kg": 0.3,
+      "unit": "kg CO2e per kg waste",
+      "uncertainty_range_percent": 20,
+      "source": "DEFRA 2023",
+      "citation": "Department for Environment, Food & Rural Affairs (DEFRA). (2023). Greenhouse gas reporting: conversion factors 2023. UK Government.",
+      "year": 2023,
+      "notes": "Emissions from waste incineration"
+    },
+    "waste_recycling": {
+      "co2_per_kg": 0.1,
+      "unit": "kg CO2e per kg waste",
+      "uncertainty_range_percent": 15,
+      "source": "DEFRA 2023",
+      "citation": "Department for Environment, Food & Rural Affairs (DEFRA). (2023). Greenhouse gas reporting: conversion factors 2023. UK Government.",
+      "year": 2023,
+      "notes": "Processing emissions for recycling"
+    }
+  },
+  "sources": {
+    "defra_2023": {
+      "name": "DEFRA 2023",
+      "full_citation": "Department for Environment, Food & Rural Affairs (DEFRA). (2023). Greenhouse gas reporting: conversion factors 2023. UK Government.",
+      "url": "https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2023",
+      "year": 2023,
+      "description": "UK Government standard conversion factors for greenhouse gas reporting"
+    },
+    "iata": {
+      "name": "IATA",
+      "full_citation": "International Air Transport Association (IATA). (2023). Sustainable Aviation Fuel (SAF) Lifecycle Assessment. IATA Environmental Programs.",
+      "url": "https://www.iata.org/en/programs/environment/sustainable-aviation-fuels/",
+      "year": 2023,
+      "description": "IATA standards and guidelines for SAF lifecycle assessment"
+    },
+    "lee_et_al_2021": {
+      "name": "Lee et al. 2021",
+      "full_citation": "Lee, D.S., Fahey, D.W., Skowron, A., Allen, M.R., Burkhardt, U., Chen, Q., Doherty, S.J., Freeman, S., Forster, P.M., Fuglestvedt, J., Gettelman, A., De León, R.R., Lim, L.L., Lund, M.T., Millar, R.J., Owen, B., Penner, J.E., Pitari, G., Prather, M.J., Sausen, R., & Wilcox, L.J. (2021). The contribution of global aviation to anthropogenic climate forcing for 2000 to 2018. Atmospheric Environment, 244, 117834.",
+      "url": "https://doi.org/10.1016/j.atmosenv.2020.117834",
+      "year": 2021,
+      "description": "Comprehensive study on aviation's contribution to climate forcing, including radiative forcing effects"
+    }
+  },
+  "metadata": {
+    "last_updated": "2024-01-15",
+    "notes": "All emission factors include uncertainty ranges to reflect scientific confidence levels. Radiative forcing multiplier of 1.9 is applied to aviation CO2 emissions to account for non-CO2 effects."
+  }
+}
+

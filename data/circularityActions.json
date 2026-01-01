@@ -1,0 +1,196 @@
+{
+  "actions": [
+    {
+      "id": "cup_as_a_service",
+      "name": "Cup-as-a-Service",
+      "description": "Use reusable cups instead of single-use disposable cups at airport cafes and restaurants",
+      "category": "waste_reduction",
+      "eco_points": 10,
+      "waste_diverted_grams": 15,
+      "waste_type": "single-use_cups",
+      "impact_description": "Prevents 15g of plastic/paper cup waste per use",
+      "availability": {
+        "locations": [
+          "Terminal 1 - All cafes",
+          "Terminal 2 - All cafes",
+          "Terminal 3 - All cafes",
+          "Terminal 4 - All cafes",
+          "Jewel - Participating restaurants"
+        ],
+        "partners": [
+          "Starbucks",
+          "Coffee Bean & Tea Leaf",
+          "Kopitiam",
+          "Ya Kun Kaya Toast"
+        ]
+      },
+      "source": {
+        "name": "Changi Airport Waste Audit 2023",
+        "citation": "Changi Airport Group. (2023). Waste Audit and Circularity Program. Changi Airport Group Sustainability Department.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "refuse_bag",
+      "name": "Refuse Bag, Bring Own Bag",
+      "description": "Decline single-use shopping bags and use your own reusable bag",
+      "category": "waste_reduction",
+      "eco_points": 5,
+      "waste_diverted_grams": 8,
+      "waste_type": "plastic_bags",
+      "impact_description": "Prevents 8g of plastic bag waste per transaction",
+      "availability": {
+        "locations": [
+          "All retail stores",
+          "All duty-free shops",
+          "All convenience stores"
+        ],
+        "partners": [
+          "All Changi Airport merchants"
+        ]
+      },
+      "source": {
+        "name": "Changi Airport Waste Audit 2023",
+        "citation": "Changi Airport Group. (2023). Waste Audit and Circularity Program. Changi Airport Group Sustainability Department.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "plant_based_meal",
+      "name": "Plant-Based Meal",
+      "description": "Choose a plant-based meal option at airport restaurants",
+      "category": "sustainable_dining",
+      "eco_points": 15,
+      "waste_diverted_grams": 0,
+      "carbon_reduction_kg": 2.5,
+      "impact_description": "Reduces carbon footprint by approximately 2.5kg CO2e compared to meat-based meal",
+      "availability": {
+        "locations": [
+          "Terminal 1 - Selected restaurants",
+          "Terminal 2 - Selected restaurants",
+          "Terminal 3 - Selected restaurants",
+          "Terminal 4 - Selected restaurants",
+          "Jewel - Selected restaurants"
+        ],
+        "partners": [
+          "Heavenly Wang",
+          "Privé",
+          "The Kitchen by Wolfgang Puck",
+          "Shake Shack (plant-based options)"
+        ]
+      },
+      "source": {
+        "name": "DEFRA 2023, Poore & Nemecek 2018",
+        "citation": "Department for Environment, Food & Rural Affairs (DEFRA). (2023). Greenhouse gas reporting: conversion factors 2023. UK Government. Poore, J., & Nemecek, T. (2018). Reducing food's environmental impacts through producers and consumers. Science, 360(6392), 987-992.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "water_refill_station",
+      "name": "Use Water Refill Station",
+      "description": "Refill your reusable water bottle at airport water refill stations instead of buying bottled water",
+      "category": "waste_reduction",
+      "eco_points": 8,
+      "waste_diverted_grams": 20,
+      "waste_type": "plastic_bottles",
+      "impact_description": "Prevents 20g of plastic bottle waste per refill",
+      "availability": {
+        "locations": [
+          "All terminals - Multiple locations",
+          "Jewel - Multiple locations"
+        ],
+        "partners": [
+          "Changi Airport Group"
+        ]
+      },
+      "source": {
+        "name": "Changi Airport Waste Audit 2023",
+        "citation": "Changi Airport Group. (2023). Waste Audit and Circularity Program. Changi Airport Group Sustainability Department.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "digital_receipt",
+      "name": "Digital Receipt",
+      "description": "Opt for digital receipts instead of paper receipts",
+      "category": "waste_reduction",
+      "eco_points": 2,
+      "waste_diverted_grams": 2,
+      "waste_type": "paper",
+      "impact_description": "Prevents 2g of paper waste per transaction",
+      "availability": {
+        "locations": [
+          "All retail stores",
+          "All restaurants",
+          "All services"
+        ],
+        "partners": [
+          "All Changi Airport merchants"
+        ]
+      },
+      "source": {
+        "name": "Changi Airport Waste Audit 2023",
+        "citation": "Changi Airport Group. (2023). Waste Audit and Circularity Program. Changi Airport Group Sustainability Department.",
+        "year": 2023
+      }
+    },
+    {
+      "id": "reusable_container",
+      "name": "Bring Reusable Food Container",
+      "description": "Bring your own reusable container for takeaway food",
+      "category": "waste_reduction",
+      "eco_points": 12,
+      "waste_diverted_grams": 25,
+      "waste_type": "food_packaging",
+      "impact_description": "Prevents 25g of food packaging waste per use",
+      "availability": {
+        "locations": [
+          "All food courts",
+          "All takeaway restaurants"
+        ],
+        "partners": [
+          "All Changi Airport food vendors"
+        ]
+      },
+      "source": {
+        "name": "Changi Airport Waste Audit 2023",
+        "citation": "Changi Airport Group. (2023). Waste Audit and Circularity Program. Changi Airport Group Sustainability Department.",
+        "year": 2023
+      }
+    }
+  ],
+  "waste_categories": {
+    "single_use_cups": {
+      "description": "Disposable cups (plastic, paper, or compostable)",
+      "average_weight_grams": 15,
+      "recycling_rate_percent": 5
+    },
+    "plastic_bags": {
+      "description": "Single-use plastic shopping bags",
+      "average_weight_grams": 8,
+      "recycling_rate_percent": 1
+    },
+    "plastic_bottles": {
+      "description": "Single-use plastic water bottles",
+      "average_weight_grams": 20,
+      "recycling_rate_percent": 30
+    },
+    "food_packaging": {
+      "description": "Takeaway food containers and packaging",
+      "average_weight_grams": 25,
+      "recycling_rate_percent": 10
+    },
+    "paper": {
+      "description": "Paper receipts and documents",
+      "average_weight_grams": 2,
+      "recycling_rate_percent": 60
+    }
+  },
+  "metadata": {
+    "last_updated": "2024-01-15",
+    "source": "Changi Airport Group Waste Audit and Circularity Program",
+    "citation": "Changi Airport Group. (2023). Waste Audit and Circularity Program. Changi Airport Group Sustainability Department.",
+    "notes": "Eco-Points and waste diversion values are based on actual waste audit data from Changi Airport operations."
+  }
+}
+

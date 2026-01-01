@@ -1,0 +1,153 @@
+{
+  "badges": [
+    {
+      "id": "saf_pioneer",
+      "name": "SAF Pioneer",
+      "description": "Made your first SAF contribution",
+      "icon": "✈️",
+      "category": "flight",
+      "requirement": {
+        "type": "action_count",
+        "actionType": "saf_contribution",
+        "count": 1
+      },
+      "rarity": "rare",
+      "pointsReward": 50
+    },
+    {
+      "id": "circular_hero",
+      "name": "Circular Hero",
+      "description": "Completed 10 circularity actions",
+      "icon": "♻️",
+      "category": "circularity",
+      "requirement": {
+        "type": "action_count",
+        "actionType": "circularity_action",
+        "count": 10
+      },
+      "rarity": "epic",
+      "pointsReward": 100
+    },
+    {
+      "id": "green_commuter",
+      "name": "Green Commuter",
+      "description": "Took 5 public transport trips",
+      "icon": "🚇",
+      "category": "transport",
+      "requirement": {
+        "type": "action_count",
+        "actionType": "transport",
+        "count": 5,
+        "filter": {
+          "mode": "public_transport"
+        }
+      },
+      "rarity": "common",
+      "pointsReward": 25
+    },
+    {
+      "id": "plant_powered",
+      "name": "Plant Powered",
+      "description": "Enjoyed 5 plant-based meals",
+      "icon": "🌱",
+      "category": "dining",
+      "requirement": {
+        "type": "action_count",
+        "actionType": "dining",
+        "count": 5,
+        "filter": {
+          "isPlantBased": true
+        }
+      },
+      "rarity": "common",
+      "pointsReward": 30
+    },
+    {
+      "id": "waste_warrior",
+      "name": "Waste Warrior",
+      "description": "Diverted 1kg of waste from landfill",
+      "icon": "🗑️",
+      "category": "circularity",
+      "requirement": {
+        "type": "waste_diverted",
+        "grams": 1000
+      },
+      "rarity": "rare",
+      "pointsReward": 75
+    },
+    {
+      "id": "carbon_crusher",
+      "name": "Carbon Crusher",
+      "description": "Reduced 1 tonne of CO2e",
+      "icon": "🌍",
+      "category": "impact",
+      "requirement": {
+        "type": "emissions_reduced",
+        "kg": 1000
+      },
+      "rarity": "legendary",
+      "pointsReward": 200
+    },
+    {
+      "id": "green_shopper",
+      "name": "Green Shopper",
+      "description": "Made 10 purchases at green merchants",
+      "icon": "🛍️",
+      "category": "shopping",
+      "requirement": {
+        "type": "action_count",
+        "actionType": "shopping",
+        "count": 10,
+        "filter": {
+          "isGreenMerchant": true
+        }
+      },
+      "rarity": "common",
+      "pointsReward": 40
+    },
+    {
+      "id": "points_milestone_500",
+      "name": "500 Points",
+      "description": "Earned 500 Eco-Points",
+      "icon": "⭐",
+      "category": "milestone",
+      "requirement": {
+        "type": "points_total",
+        "points": 500
+      },
+      "rarity": "common",
+      "pointsReward": 0
+    },
+    {
+      "id": "points_milestone_1000",
+      "name": "1,000 Points",
+      "description": "Earned 1,000 Eco-Points",
+      "icon": "⭐",
+      "category": "milestone",
+      "requirement": {
+        "type": "points_total",
+        "points": 1000
+      },
+      "rarity": "rare",
+      "pointsReward": 0
+    },
+    {
+      "id": "points_milestone_5000",
+      "name": "5,000 Points",
+      "description": "Earned 5,000 Eco-Points",
+      "icon": "⭐",
+      "category": "milestone",
+      "requirement": {
+        "type": "points_total",
+        "points": 5000
+      },
+      "rarity": "epic",
+      "pointsReward": 0
+    }
+  ],
+  "metadata": {
+    "last_updated": "2024-01-15",
+    "source": "Changi Airport Group Sustainability Program"
+  }
+}
+

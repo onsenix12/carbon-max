@@ -1,0 +1,146 @@
+{
+  "tiers": [
+    {
+      "id": "seedling",
+      "name": "Seedling",
+      "level": 1,
+      "min_eco_points": 0,
+      "max_eco_points": 499,
+      "description": "Just starting your sustainability journey. Every small action counts!",
+      "points_multiplier": 1.0,
+      "perks": [
+        "Access to basic sustainability tips",
+        "Track your carbon footprint",
+        "View your contribution impact"
+      ],
+      "social_signaling": {
+        "badge_name": "Seedling Badge",
+        "badge_icon": "🌱",
+        "display_name": "Seedling",
+        "description": "New to sustainable travel"
+      },
+      "unlock_requirements": "Join the program"
+    },
+    {
+      "id": "sapling",
+      "name": "Sapling",
+      "level": 2,
+      "min_eco_points": 500,
+      "max_eco_points": 1999,
+      "description": "Growing your impact! You're making consistent sustainable choices.",
+      "points_multiplier": 1.1,
+      "perks": [
+        "10% bonus Eco-Points on all actions",
+        "Priority access to SAF contribution options",
+        "Exclusive sustainability workshops",
+        "Personalized carbon reduction recommendations"
+      ],
+      "social_signaling": {
+        "badge_name": "Sapling Badge",
+        "badge_icon": "🌿",
+        "display_name": "Sapling",
+        "description": "Growing sustainability champion"
+      },
+      "unlock_requirements": "Earn 500 Eco-Points"
+    },
+    {
+      "id": "tree",
+      "name": "Tree",
+      "level": 3,
+      "min_eco_points": 2000,
+      "max_eco_points": 4999,
+      "description": "A strong foundation of sustainable actions! Your impact is taking root.",
+      "points_multiplier": 1.25,
+      "perks": [
+        "25% bonus Eco-Points on all actions",
+        "VIP access to SAF contribution programs",
+        "Complimentary airport lounge access (1 visit per quarter)",
+        "Exclusive Tree-tier merchandise",
+        "Invitation to sustainability events"
+      ],
+      "social_signaling": {
+        "badge_name": "Tree Badge",
+        "badge_icon": "🌳",
+        "display_name": "Tree",
+        "description": "Established sustainability leader"
+      },
+      "unlock_requirements": "Earn 2,000 Eco-Points"
+    },
+    {
+      "id": "forest",
+      "name": "Forest",
+      "level": 4,
+      "min_eco_points": 5000,
+      "max_eco_points": 9999,
+      "description": "Creating a powerful ecosystem of change! Your commitment inspires others.",
+      "points_multiplier": 1.5,
+      "perks": [
+        "50% bonus Eco-Points on all actions",
+        "Priority booking for SAF contribution",
+        "Complimentary airport lounge access (unlimited)",
+        "Exclusive Forest-tier merchandise and experiences",
+        "Invitation to exclusive sustainability roundtables",
+        "Recognition on Changi sustainability leaderboard",
+        "Personal sustainability impact report"
+      ],
+      "social_signaling": {
+        "badge_name": "Forest Badge",
+        "badge_icon": "🌲",
+        "display_name": "Forest",
+        "description": "Sustainability ecosystem builder"
+      },
+      "unlock_requirements": "Earn 5,000 Eco-Points"
+    },
+    {
+      "id": "guardian",
+      "name": "Guardian",
+      "level": 5,
+      "min_eco_points": 10000,
+      "max_eco_points": null,
+      "description": "A true guardian of our planet! You're leading the way to a sustainable future.",
+      "points_multiplier": 2.0,
+      "perks": [
+        "100% bonus Eco-Points on all actions (double points)",
+        "VIP SAF contribution matching program",
+        "Complimentary airport lounge access (unlimited, all terminals)",
+        "Exclusive Guardian-tier experiences and merchandise",
+        "Invitation to Changi sustainability advisory panel",
+        "Featured recognition on Changi sustainability leaderboard",
+        "Annual personalized sustainability impact report",
+        "Opportunity to name a sustainability initiative",
+        "Exclusive Guardian-only events and experiences"
+      ],
+      "social_signaling": {
+        "badge_name": "Guardian Badge",
+        "badge_icon": "🛡️",
+        "display_name": "Guardian",
+        "description": "Planet guardian and sustainability champion"
+      },
+      "unlock_requirements": "Earn 10,000 Eco-Points"
+    }
+  ],
+  "points_earning_actions": {
+    "saf_contribution": {
+      "base_points_per_liter": 10,
+      "description": "Earn points for contributing to SAF adoption"
+    },
+    "waste_reduction": {
+      "base_points_per_action": 5,
+      "description": "Earn points for reducing waste at the airport"
+    },
+    "carbon_offset": {
+      "base_points_per_tonne": 50,
+      "description": "Earn points for offsetting carbon emissions"
+    },
+    "sustainable_merchant": {
+      "base_points_per_dollar": 0.5,
+      "description": "Earn points for shopping at sustainable merchants"
+    }
+  },
+  "metadata": {
+    "last_updated": "2024-01-15",
+    "source": "Changi Airport Group Sustainability Program",
+    "citation": "Changi Airport Group. (2024). Green Tier Loyalty Program Design. Changi Airport Group Sustainability Department."
+  }
+}
+
