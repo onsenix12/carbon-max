@@ -266,9 +266,8 @@ export function useGreenTier() {
     currentTier: context.currentTier,
     tierProgress: context.tierProgress,
     totalPoints: context.totalEcoPoints,
-    pointsUntilNextTier: context.pointsUntilNextTier,
+    pointsUntilNextTier: context.pointsToNextTier,
     progressPercent: context.progressPercent,
-    allTiers: context.allTiers,
     getTier: context.getTier,
     earnPoints: async (actionType: string, amount?: number, actionId?: string) => {
       // Calculate points based on action type

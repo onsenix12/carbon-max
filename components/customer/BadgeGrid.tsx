@@ -67,7 +67,7 @@ export default function BadgeGrid() {
         }
         if (req.actionType === 'transport') {
           const filtered = req.filter?.mode === 'public_transport'
-            ? journey.transport.filter(t => t.mode === 'public_transport' || t.mode === 'mrt' || t.mode === 'bus')
+            ? journey.transport.filter(t => t.mode === 'mrt' || t.mode === 'bus')
             : journey.transport;
           return filtered.length >= req.count;
         }

@@ -71,7 +71,7 @@ export default function SourceBreakdown({ data }: SourceBreakdownProps) {
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
             <Pie
-              data={data}
+              data={data as any}
               cx="50%"
               cy="50%"
               labelLine={false}
@@ -101,7 +101,9 @@ export default function SourceBreakdown({ data }: SourceBreakdownProps) {
                   className="w-8 h-8 rounded-lg flex items-center justify-center"
                   style={{ backgroundColor: `${item.color}20` }}
                 >
-                  <Icon className="w-4 h-4" style={{ color: item.color }} />
+                  <div style={{ color: item.color }}>
+                    <Icon className="w-4 h-4" />
+                  </div>
                 </div>
                 <div>
                   <p className="text-sm font-semibold text-changi-navy">{item.name}</p>

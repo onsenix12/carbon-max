@@ -71,7 +71,7 @@ export default function EmissionBreakdown() {
               </div>
               
               {/* SAF Deduction for Flight */}
-              {item.name === 'Flight' && item.safDeduction > 0 && (
+              {item.name === 'Flight' && item.safDeduction && item.safDeduction > 0 && (
                 <div className="ml-12 flex items-center gap-2 text-carbon-leaf">
                   <Minus className="w-4 h-4" />
                   <span className="text-sm font-semibold">
@@ -81,7 +81,7 @@ export default function EmissionBreakdown() {
               )}
               
               {/* Offset Deduction for Flight */}
-              {item.name === 'Flight' && item.offsetDeduction > 0 && (
+              {item.name === 'Flight' && item.offsetDeduction && item.offsetDeduction > 0 && (
                 <div className="ml-12 flex items-center gap-2 text-carbon-leaf">
                   <Minus className="w-4 h-4" />
                   <span className="text-sm font-semibold">

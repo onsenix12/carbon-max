@@ -25,7 +25,6 @@ export default function NudgeToast({ userId = 'default', onAction }: NudgeToastP
           flight: journey.flight ? {
             emissions: journey.flight.emissions,
             emissionsWithRF: journey.flight.emissionsWithRF,
-            includeRF: journey.flight.includeRF,
             safContribution: journey.flight.safContribution,
             offsetPurchase: journey.flight.offsetPurchase,
             routeId: journey.flight.routeId,
@@ -47,7 +46,7 @@ export default function NudgeToast({ userId = 'default', onAction }: NudgeToastP
             level: tierInfo.level || 1,
           },
           totalEcoPoints: tierPoints,
-          pointsToNextTier: progress.pointsToNextTier,
+          pointsToNextTier: progress.pointsToNextTier ?? undefined,
           progressPercent: progress.progressPercent,
           tierProgress: {
             progressToNext: progress.tierProgress?.progressToNext ? {

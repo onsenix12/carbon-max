@@ -176,8 +176,8 @@ export const COMMANDS = {
         name: tierInfo.progress.progressToNext.nextTier.name,
         minPoints: tierInfo.progress.progressToNext.nextTier.minPoints,
       } : undefined,
-      tierInfo.progress.pointsToNextTier || undefined,
-      tierInfo.progress.progressPercent
+      tierInfo.progress.pointsUntilNextTier ?? undefined,
+      tierInfo.progress.progressToNext?.progressPercent
     );
     
     await sendLongMessage(chatId, progressMsg, buildTierKeyboard());
@@ -230,8 +230,8 @@ export const COMMANDS = {
         },
         totalEcoPoints: tierInfo.points,
         lifetimeEcoPoints: tierInfo.points,
-        pointsToNextTier: tierInfo.progress.pointsToNextTier,
-        progressPercent: tierInfo.progress.progressPercent,
+        pointsToNextTier: tierInfo.progress.pointsUntilNextTier ?? null,
+        progressPercent: tierInfo.progress.progressToNext?.progressPercent ?? 0,
       };
       
       const response = await askMax(question, journeyContext, greenTierContext);
@@ -292,8 +292,8 @@ export const COMMANDS = {
         },
         totalEcoPoints: tierInfo.points,
         lifetimeEcoPoints: tierInfo.points,
-        pointsToNextTier: tierInfo.progress.pointsToNextTier,
-        progressPercent: tierInfo.progress.progressPercent,
+        pointsToNextTier: tierInfo.progress.pointsUntilNextTier ?? null,
+        progressPercent: tierInfo.progress.progressToNext?.progressPercent ?? 0,
       };
       
       const story = await generateCompleteImpactStory(journeyContext, greenTierContext);

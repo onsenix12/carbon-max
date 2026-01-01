@@ -159,7 +159,7 @@ export async function generateCompleteImpactStory(
       contributionType: 'saf',
       amount: safAmount,
       co2eKg: journeyContext.flight.safContribution.emissionsReduced,
-      provider: journeyContext.flight.safContribution.provider || 'neste_singapore',
+      provider: 'neste_singapore',
       additionalDetails: {
         liters: journeyContext.flight.safContribution.liters,
         route: `${journeyContext.flight.origin} → ${journeyContext.flight.destination}`,

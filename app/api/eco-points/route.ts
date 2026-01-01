@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ZodError } from 'zod';
 import { calculateEcoPoints, calculateTierProgress, getCurrentTier } from '@/lib/rewards/ecoPoints';
 import type { ActionType } from '@/lib/rewards/ecoPoints';
 import { validateRequest, ecoPointsRequestSchema } from '@/lib/utils/validation';
@@ -97,12 +98,13 @@ export async function POST(request: NextRequest) {
     // Validate request
     const validation = validateRequest(ecoPointsRequestSchema, body);
     if (!validation.success) {
+      const zodError: ZodError = validation.details;
       return NextResponse.json<EcoPointsResponse>(
         {
           ...createErrorResponse(
             `Validation failed: ${validation.error}`,
             ERROR_CODES.INVALID_INPUT,
-            validation.details.errors
+            zodError.issues
           ),
         },
         { status: 400 }
@@ -130,10 +132,10 @@ export async function POST(request: NextRequest) {
       // Calculate points earned
       const pointsResult = calculateEcoPoints(
         {
-          actionType: validatedBody.actionType,
+          actionType: validatedBody.actionType as ActionType,
           amount: validatedBody.amount,
           actionId: validatedBody.actionId,
-          tierMultiplier: validatedBody.tierMultiplier || currentTier.points_multiplier,
+          tierMultiplier: currentTier.points_multiplier,
         },
         pointsData.total
       );

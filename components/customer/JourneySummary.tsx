@@ -174,7 +174,7 @@ export default function JourneySummary() {
                 <XAxis dataKey="name" stroke="#5b5b5b" />
                 <YAxis stroke="#5b5b5b" label={{ value: 'kg CO₂e', angle: -90, position: 'insideLeft' }} />
                 <Tooltip 
-                  formatter={(value: number) => `${value.toFixed(1)} kg CO₂e`}
+                  formatter={(value) => `${(typeof value === 'number' ? value : 0).toFixed(1)} kg CO₂e`}
                   contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
                 />
                 <Legend />
@@ -213,7 +213,7 @@ export default function JourneySummary() {
                 <XAxis dataKey="name" stroke="#5b5b5b" />
                 <YAxis stroke="#5b5b5b" label={{ value: 'kg CO₂e', angle: -90, position: 'insideLeft' }} />
                 <Tooltip 
-                  formatter={(value: number) => `${value.toFixed(1)} kg CO₂e`}
+                  formatter={(value) => `${(typeof value === 'number' ? value : 0).toFixed(1)} kg CO₂e`}
                   contentStyle={{ backgroundColor: '#fff', border: '1px solid #e5e7eb', borderRadius: '8px' }}
                 />
                 <Legend />

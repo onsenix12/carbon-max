@@ -320,7 +320,7 @@ export const PROACTIVE_NUDGES = {
     condition: (context: NudgeContext) => {
       if (!context.time) return false;
       const hour = context.time.getHours();
-      return [...MEAL_TIME_CONSTANTS.LUNCH_HOURS, ...MEAL_TIME_CONSTANTS.DINNER_HOURS].includes(hour);
+      return [...MEAL_TIME_CONSTANTS.LUNCH_HOURS, ...MEAL_TIME_CONSTANTS.DINNER_HOURS].includes(hour as any);
     },
     template: (context: NudgeContext): Nudge => {
       return {

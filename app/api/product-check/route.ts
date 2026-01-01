@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ZodError } from 'zod';
 import { askMax } from '@/lib/claude/askMax';
 import merchantsData from '@/data/merchants.json';
 import { validateRequest } from '@/lib/utils/validation';
@@ -345,11 +346,12 @@ export async function POST(request: NextRequest) {
     // Validate request
     const validation = validateRequest(productCheckRequestSchema, body);
     if (!validation.success) {
+      const zodError: ZodError = validation.details;
       return NextResponse.json(
         createErrorResponse(
           `Validation failed: ${validation.error}`,
           ERROR_CODES.INVALID_INPUT,
-          validation.details.errors
+          zodError.issues
         ),
         { status: 400 }
       );

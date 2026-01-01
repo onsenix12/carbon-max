@@ -57,7 +57,7 @@ export interface Activity {
     shopId?: string;
     shopName?: string;
     category?: string;
-    amount?: number;
+    shopAmount?: number;
     
     // Plant-based meal
     restaurantId?: string;
@@ -498,7 +498,7 @@ export const ActivityLogger = {
         shopId: data.shopId,
         shopName: data.shopName,
         category: data.category,
-        amount: data.amount,
+        shopAmount: data.amount,
       },
       ecoPoints: data.ecoPoints,
     });

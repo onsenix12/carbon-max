@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ZodError } from 'zod';
 import { calculateFlightEmissions } from '@/lib/emissions/flightCalculator';
 import { ActivityLogger } from '@/lib/activity/logger';
 import routesData from '@/data/routes.json';
@@ -61,11 +62,12 @@ export async function POST(request: NextRequest) {
     // Validate request
     const validation = validateRequest(calculateRequestSchema, body);
     if (!validation.success) {
+      const zodError: ZodError = validation.details;
       return NextResponse.json(
         createErrorResponse(
           `Validation failed: ${validation.error}`,
           ERROR_CODES.INVALID_INPUT,
-          validation.details.errors
+          zodError.issues
         ),
         { status: 400 }
       );

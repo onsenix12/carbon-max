@@ -153,7 +153,7 @@ export default function SAFTimelineChart({
             y={targetMandate}
             stroke="#902437"
             strokeDasharray="5 5"
-            label={{ value: `${targetMandate}% Target (${targetYear})`, position: 'topRight' }}
+            label={{ value: `${targetMandate}% Target (${targetYear})`, position: 'right' as const }}
           />
           {/* SAF Contribution line */}
           <Line

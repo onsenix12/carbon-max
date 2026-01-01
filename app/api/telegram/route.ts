@@ -191,14 +191,16 @@ function buildCircularityKeyboard() {
   
   for (let i = 0; i < actions.length; i += 2) {
     const row = [];
+    const action1 = actions[i] as typeof actions[0] & { icon?: string };
     row.push({
-      text: `${actions[i].icon || '♻️'} ${actions[i].name}`,
-      callback_data: `eco_${actions[i].id}`
+      text: `${action1.icon || '♻️'} ${action1.name}`,
+      callback_data: `eco_${action1.id}`
     });
     if (actions[i + 1]) {
+      const action2 = actions[i + 1] as typeof actions[0] & { icon?: string };
       row.push({
-        text: `${actions[i + 1].icon || '♻️'} ${actions[i + 1].name}`,
-        callback_data: `eco_${actions[i + 1].id}`
+        text: `${action2.icon || '♻️'} ${action2.name}`,
+        callback_data: `eco_${action2.id}`
       });
     }
     keyboard.push(row);
@@ -486,12 +488,12 @@ async function handleTier(chatId: number) {
     tierInfo.tier.name,
     tierInfo.tier.social_signaling.badge_icon,
     tierInfo.points,
-    tierInfo.progress.progressPercent,
+    tierInfo.progress.progressToNext?.progressPercent,
     tierInfo.progress.progressToNext?.nextTier ? {
       name: tierInfo.progress.progressToNext.nextTier.name,
       minPoints: tierInfo.progress.progressToNext.nextTier.minPoints,
     } : undefined,
-    tierInfo.progress.pointsToNextTier
+    tierInfo.progress.pointsUntilNextTier ?? undefined
   );
   
   if (!tierInfo.progress.progressToNext?.nextTier) {
@@ -531,8 +533,6 @@ async function handleAsk(chatId: number, question?: string) {
           amount: session.safContribution.amount,
           liters: session.safContribution.liters,
           emissionsReduced: session.safContribution.co2eAvoided,
-          provider: 'neste_singapore',
-          timestamp: new Date().toISOString(),
         } : undefined,
       } : undefined,
       transport: [],
@@ -558,8 +558,8 @@ async function handleAsk(chatId: number, question?: string) {
       },
       totalEcoPoints: tierInfo.points,
       lifetimeEcoPoints: tierInfo.points,
-      pointsToNextTier: tierInfo.progress.pointsToNextTier,
-      progressPercent: tierInfo.progress.progressPercent,
+      pointsToNextTier: tierInfo.progress.pointsUntilNextTier,
+      progressPercent: tierInfo.progress.progressToNext?.progressPercent ?? 0,
     };
     
     const response = await askMax(question, journeyContext, greenTierContext);
@@ -595,8 +595,6 @@ async function handleImpact(chatId: number) {
           amount: session.safContribution.amount,
           liters: session.safContribution.liters,
           emissionsReduced: session.safContribution.co2eAvoided,
-          provider: 'neste_singapore',
-          timestamp: new Date().toISOString(),
         } : undefined,
       } : undefined,
       transport: [],
@@ -622,8 +620,8 @@ async function handleImpact(chatId: number) {
       },
       totalEcoPoints: tierInfo.points,
       lifetimeEcoPoints: tierInfo.points,
-      pointsToNextTier: tierInfo.progress.pointsToNextTier,
-      progressPercent: tierInfo.progress.progressPercent,
+      pointsToNextTier: tierInfo.progress.pointsUntilNextTier,
+      progressPercent: tierInfo.progress.progressToNext?.progressPercent ?? 0,
     };
     
     const story = await generateCompleteImpactStory(journeyContext, greenTierContext);
@@ -730,8 +728,8 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
         routeId: route.id,
         destination: route.destination,
         destinationCity: route.destination_city,
-        emissionsKg: result.perPassenger.emissions,
-        emissionsWithRF: result.perPassenger.emissionsWithRF,
+        emissionsKg: result.result.perPassenger.emissions,
+        emissionsWithRF: result.result.perPassenger.emissionsWithRF,
         class: classType,
       };
 
@@ -740,8 +738,8 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
         routeId: route.id,
         origin: route.origin || 'SIN',
         destination: route.destination,
-        emissions: result.perPassenger.emissions,
-        emissionsWithRF: result.perPassenger.emissionsWithRF,
+        emissions: result.result.perPassenger.emissions,
+        emissionsWithRF: result.result.perPassenger.emissionsWithRF,
         cabinClass: classType,
         aircraftEfficiency: route.aircraft_efficiency_rating,
       });
@@ -749,15 +747,15 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
       // Step 1: Show flight result with SAF prominently
       let resultMsg = `✈️ Flight to ${route.destination_city}\n\n`;
       resultMsg += `Carbon Footprint:\n`;
-      resultMsg += `• Without RF: ${result.perPassenger.emissions.toLocaleString()} kg CO₂e\n`;
-      resultMsg += `• With RF: ${result.perPassenger.emissionsWithRF.toLocaleString()} kg CO₂e\n\n`;
+      resultMsg += `• Without RF: ${result.result.perPassenger.emissions.toLocaleString()} kg CO₂e\n`;
+      resultMsg += `• With RF: ${result.result.perPassenger.emissionsWithRF.toLocaleString()} kg CO₂e\n\n`;
       resultMsg += `🌿 SAF-First Recommendation:\n`;
       resultMsg += `For aviation, SAF (Sustainable Aviation Fuel) is the most impactful choice — it directly reduces emissions at the source.\n\n`;
       resultMsg += `💡 SAF directly reduces aviation emissions. Offsets compensate elsewhere.\n`;
       resultMsg += `Singapore mandates 1% SAF from 2026 — you'd be ahead of the curve!`;
       
       // Step 2: Show SAF contribution options
-      await sendLongMessage(chatId, resultMsg, buildSAFKeyboard(result.perPassenger.emissions));
+      await sendLongMessage(chatId, resultMsg, buildSAFKeyboard(result.result.perPassenger.emissions));
       
       // Send proactive SAF nudge after calculation
       setTimeout(async () => {
@@ -871,7 +869,7 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
       } else {
         const progress = calculateTierProgress(tierInfo.points + pointsResult.finalPoints);
         if (progress.progressToNext?.nextTier) {
-          successMsg += `📊 Progress to ${progress.progressToNext.nextTier.name}: ${progress.progressPercent?.toFixed(0) || 0}%\n`;
+          successMsg += `📊 Progress to ${progress.progressToNext.nextTier.name}: ${progress.progressToNext.progressPercent?.toFixed(0) || 0}%\n`;
         }
       }
       
@@ -994,12 +992,16 @@ async function sendProactiveNudge(chatId: number, session: UserSession) {
         flight: session.currentFlight ? {
           emissions: session.currentFlight.emissionsKg,
           emissionsWithRF: session.currentFlight.emissionsWithRF,
-          safContribution: session.safContribution,
+          safContribution: session.safContribution ? {
+            amount: session.safContribution.amount,
+            liters: session.safContribution.liters,
+            emissionsReduced: session.safContribution.co2eAvoided,
+          } : undefined,
           routeId: session.currentFlight.routeId,
         } : undefined,
-        transport: session.journey?.transport || [],
-        shopping: session.journey?.shopping || [],
-        dining: session.journey?.dining || [],
+        transport: [],
+        shopping: [],
+        dining: [],
         totalEmissions: session.journey?.totalEmissions || 0,
         netEmissions: session.journey?.netEmissions || 0,
         totalEcoPointsEarned: session.journey?.totalPoints || 0,
@@ -1014,8 +1016,8 @@ async function sendProactiveNudge(chatId: number, session: UserSession) {
           level: tierInfo.tier.level,
         },
         totalEcoPoints: tierInfo.points,
-        pointsToNextTier: tierInfo.progress.pointsToNextTier,
-        progressPercent: tierInfo.progress.progressPercent,
+        pointsToNextTier: tierInfo.progress.pointsUntilNextTier ?? undefined,
+        progressPercent: tierInfo.progress.progressToNext?.progressPercent ?? 0,
         tierProgress: {
           progressToNext: tierInfo.progress.progressToNext ? {
             nextTier: {
@@ -1031,9 +1033,9 @@ async function sendProactiveNudge(chatId: number, session: UserSession) {
     const nudge = evaluateNudges(nudgeContext, session.userId);
     if (nudge && nudge.message) {
       const telegramNudge = getTelegramNudge(nudge);
-      await sendLongMessage(chatId, telegramNudge.message, {
+      await sendLongMessage(chatId, telegramNudge.message, telegramNudge.keyboard || {
         reply_markup: {
-          inline_keyboard: telegramNudge.keyboard || [],
+          inline_keyboard: [],
         },
       });
       markNudgeSent(session.userId, nudge.id);
@@ -1066,8 +1068,6 @@ async function handleFreeFormMessage(chatId: number, text: string) {
           amount: session.safContribution.amount,
           liters: session.safContribution.liters,
           emissionsReduced: session.safContribution.co2eAvoided,
-          provider: 'neste_singapore',
-          timestamp: new Date().toISOString(),
         } : undefined,
       } : undefined,
       transport: [],
@@ -1093,8 +1093,8 @@ async function handleFreeFormMessage(chatId: number, text: string) {
       },
       totalEcoPoints: tierInfo.points,
       lifetimeEcoPoints: tierInfo.points,
-      pointsToNextTier: tierInfo.progress.pointsToNextTier,
-      progressPercent: tierInfo.progress.progressPercent,
+      pointsToNextTier: tierInfo.progress.pointsUntilNextTier,
+      progressPercent: tierInfo.progress.progressToNext?.progressPercent ?? 0,
     };
     
     const response = await askMax(text, journeyContext, greenTierContext);
@@ -1258,7 +1258,7 @@ if (isDevelopment && !handlersSetup) {
   });
   
   // Delete any existing webhook when starting in polling mode
-  bot.deleteWebhook().then(() => {
+  bot.deleteWebHook().then(() => {
     console.log('🤖 Telegram bot started in POLLING mode (local development)');
     console.log('💡 For production, use webhook mode instead');
   }).catch((error) => {

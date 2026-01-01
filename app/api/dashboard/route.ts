@@ -403,10 +403,11 @@ async function aggregateDashboardData(
  * - lastActivityTimestamp: ISO timestamp to detect new activities
  */
 export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
+  const period = (searchParams.get('period') || 'week') as Period;
+  const view = (searchParams.get('view') || 'overview') as View;
+  
   try {
-    const searchParams = request.nextUrl.searchParams;
-    const period = (searchParams.get('period') || 'week') as Period;
-    const view = (searchParams.get('view') || 'overview') as View;
     const lastActivityTimestamp = searchParams.get('lastActivityTimestamp') || undefined;
     
     // Validate period

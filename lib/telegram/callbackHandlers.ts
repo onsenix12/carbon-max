@@ -92,8 +92,8 @@ export async function handleClassCallback(
     routeId: route.id,
     destination: route.destination,
     destinationCity: route.destination_city,
-    emissionsKg: result.perPassenger.emissions,
-    emissionsWithRF: result.perPassenger.emissionsWithRF,
+    emissionsKg: result.result.perPassenger.emissions,
+    emissionsWithRF: result.result.perPassenger.emissionsWithRF,
     class: classType,
   };
   
@@ -101,14 +101,14 @@ export async function handleClassCallback(
     routeId: route.id,
     origin: route.origin || 'SIN',
     destination: route.destination,
-    emissions: result.perPassenger.emissions,
-    emissionsWithRF: result.perPassenger.emissionsWithRF,
+    emissions: result.result.perPassenger.emissions,
+    emissionsWithRF: result.result.perPassenger.emissionsWithRF,
     cabinClass: classType,
     aircraftEfficiency: route.aircraft_efficiency_rating,
   });
   
   const resultMsg = buildFlightResultMessage(route, result, classType);
-  await sendLongMessage(chatId, resultMsg, buildSAFKeyboard(result.perPassenger.emissions));
+  await sendLongMessage(chatId, resultMsg, buildSAFKeyboard(result.result.perPassenger.emissions));
 }
 
 /**
@@ -121,17 +121,17 @@ function buildFlightResultMessage(
 ): string {
   let message = `✈️ Flight to ${route.destination_city}\n\n`;
   message += `Carbon Footprint:\n`;
-  message += `• Without RF: ${result.perPassenger.emissions.toLocaleString()} kg CO₂e\n`;
-  message += `• With RF: ${result.perPassenger.emissionsWithRF.toLocaleString()} kg CO₂e\n\n`;
+  message += `• Without RF: ${result.result.perPassenger.emissions.toLocaleString()} kg CO₂e\n`;
+  message += `• With RF: ${result.result.perPassenger.emissionsWithRF.toLocaleString()} kg CO₂e\n\n`;
   message += `🌿 *SAF Contribution Options:*\n`;
   
-  const saf25Cost = ((result.perPassenger.emissions * 0.25) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER) * SAF_CONSTANTS.COST_PER_LITER;
-  const saf50Cost = ((result.perPassenger.emissions * 0.50) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER) * SAF_CONSTANTS.COST_PER_LITER;
+  const saf25Cost = ((result.result.perPassenger.emissions * 0.25) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER) * SAF_CONSTANTS.COST_PER_LITER;
+  const saf50Cost = ((result.result.perPassenger.emissions * 0.50) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER) * SAF_CONSTANTS.COST_PER_LITER;
   
-  message += `🌿 25% SAF: S$${saf25Cost.toFixed(2)} — ${((result.perPassenger.emissions * 0.25) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER).toFixed(1)}L\n`;
-  message += `🌿 50% SAF: S$${saf50Cost.toFixed(2)} — ${((result.perPassenger.emissions * 0.50) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER).toFixed(1)}L\n`;
-  message += `🌿 75% SAF: S$${(saf25Cost * 3).toFixed(2)} — ${((result.perPassenger.emissions * 0.75) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER).toFixed(1)}L\n`;
-  message += `🌿 100% SAF: S$${(saf25Cost * 4).toFixed(2)} — ${((result.perPassenger.emissions * 1.0) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER).toFixed(1)}L\n\n`;
+  message += `🌿 25% SAF: S$${saf25Cost.toFixed(2)} — ${((result.result.perPassenger.emissions * 0.25) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER).toFixed(1)}L\n`;
+  message += `🌿 50% SAF: S$${saf50Cost.toFixed(2)} — ${((result.result.perPassenger.emissions * 0.50) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER).toFixed(1)}L\n`;
+  message += `🌿 75% SAF: S$${(saf25Cost * 3).toFixed(2)} — ${((result.result.perPassenger.emissions * 0.75) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER).toFixed(1)}L\n`;
+  message += `🌿 100% SAF: S$${(saf25Cost * 4).toFixed(2)} — ${((result.result.perPassenger.emissions * 1.0) / SAF_CONSTANTS.CO2E_REDUCTION_PER_LITER).toFixed(1)}L\n\n`;
   message += `*SAF directly reduces aviation emissions. Singapore mandates 1% SAF from 2026.*\n\n`;
   message += `Select a contribution percentage:`;
   

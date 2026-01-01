@@ -169,14 +169,16 @@ export function buildCircularityKeyboard() {
   
   for (let i = 0; i < actions.length; i += 2) {
     const row = [];
+    const action1 = actions[i] as typeof actions[0] & { icon?: string };
     row.push({
-      text: `${actions[i].icon || '♻️'} ${actions[i].name}`,
-      callback_data: `eco_${actions[i].id}`
+      text: `${action1.icon || '♻️'} ${action1.name}`,
+      callback_data: `eco_${action1.id}`
     });
     if (actions[i + 1]) {
+      const action2 = actions[i + 1] as typeof actions[0] & { icon?: string };
       row.push({
-        text: `${actions[i + 1].icon || '♻️'} ${actions[i + 1].name}`,
-        callback_data: `eco_${actions[i + 1].id}`
+        text: `${action2.icon || '♻️'} ${action2.name}`,
+        callback_data: `eco_${action2.id}`
       });
     }
     keyboard.push(row);

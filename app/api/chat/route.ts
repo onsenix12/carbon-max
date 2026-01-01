@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ZodError } from 'zod';
 import { askMax, type JourneyContext, type GreenTierContext, type ChatMessage } from '@/lib/claude/askMax';
 import { generateCompleteImpactStory } from '@/lib/claude/impactStories';
 import { checkForNudge } from '@/lib/claude/nudges';
@@ -70,11 +71,12 @@ export async function POST(request: NextRequest) {
     // Validate request
     const validation = validateRequest(chatRequestSchema, body);
     if (!validation.success) {
+      const zodError: ZodError = validation.details;
       return NextResponse.json(
         createErrorResponse(
           `Validation failed: ${validation.error}`,
           ERROR_CODES.INVALID_INPUT,
-          validation.details.errors
+          zodError.issues
         ),
         { status: 400 }
       );
@@ -105,7 +107,10 @@ export async function POST(request: NextRequest) {
     // Check for proactive nudges
     const nudge = checkForNudge({
       journey: journeyContext,
-      greenTier: greenTierContext,
+      greenTier: {
+        ...greenTierContext,
+        pointsToNextTier: greenTierContext.pointsToNextTier ?? undefined,
+      },
       time: new Date(),
     });
 

@@ -165,14 +165,14 @@ export default function GreenTierStatus() {
         {nextTier && (
           <div className="bg-white rounded-xl p-6 shadow-sm border-2 border-dashed border-changi-gray/30">
             <div className="flex items-center gap-2 mb-4">
-              <span className="text-2xl opacity-50">{tierIcons[nextTier.id] || '🌿'}</span>
+              <span className="text-2xl opacity-50">{tierIcons[allTiers.find(t => t.name === nextTier.name)?.id || ''] || '🌿'}</span>
               <h3 className="text-xl font-bold text-changi-gray">Next: {nextTier.name}</h3>
             </div>
             <p className="text-sm text-changi-gray mb-4 opacity-75">
               Unlock at {nextTier.minPoints.toLocaleString()} points
             </p>
             <ul className="space-y-2">
-              {allTiers.find(t => t.id === nextTier.id)?.perks.slice(0, 3).map((perk, index) => (
+              {allTiers.find(t => t.name === nextTier.name)?.perks.slice(0, 3).map((perk, index) => (
                 <li key={index} className="flex items-start gap-2 text-changi-gray opacity-50">
                   <span className="mt-1">•</span>
                   <span className="text-sm">{perk}</span>
