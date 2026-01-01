@@ -97,5 +97,5 @@ http://localhost:3000
 
 **That's it! You're ready to test.** 🎉
 
-For detailed testing steps, see [LOCAL_TESTING_GUIDE.md](LOCAL_TESTING_GUIDE.md)
+For detailed testing steps, see [Local Testing Guide](LOCAL_TESTING_GUIDE.md)
 

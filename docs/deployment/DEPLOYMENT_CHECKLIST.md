@@ -45,7 +45,7 @@ Expected response should show:
 node scripts/verify-telegram-webhook.js <YOUR_BOT_TOKEN> https://your-app.vercel.app
 ```
 
-**If the bot doesn't work, see [TELEGRAM_TROUBLESHOOTING.md](./TELEGRAM_TROUBLESHOOTING.md) for detailed troubleshooting steps.**
+**If the bot doesn't work, see [Telegram Troubleshooting Guide](../troubleshooting/TELEGRAM_TROUBLESHOOTING.md) for detailed troubleshooting steps.**
 
 ---
 

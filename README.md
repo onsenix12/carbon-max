@@ -157,7 +157,7 @@ NODE_ENV=development
    - Open Telegram and search for `@BotFather`
    - Send `/newbot` and follow prompts
    - Copy the token and add to `.env.local` as `TELEGRAM_BOT_TOKEN`
-   - See [lib/telegram/README.md](lib/telegram/README.md) for full setup
+   - See [Telegram Bot Setup](docs/setup/telegram-bot.md) for full setup
 
 ## Project Structure
 
@@ -199,12 +199,26 @@ GreenMax/
     └── Customer_Journeys.md
 ```
 
-## Key Documentation
+## Documentation
 
+All documentation has been consolidated in the **[docs/](docs/)** folder for easy access.
+
+### Quick Links
+
+**Getting Started:**
+- **[Quick Start Guide](docs/getting-started/QUICK_START.md)** - Get up and running in 5 minutes
+- **[Local Testing Guide](docs/getting-started/LOCAL_TESTING_GUIDE.md)** - Step-by-step testing instructions
+
+**Setup & Configuration:**
+- **[Telegram Bot Setup](docs/setup/telegram-bot.md)** - Complete Telegram bot configuration
+- **[Webhook Setup](docs/setup/WEBHOOK_SETUP.md)** - Telegram webhook configuration
+
+**Project Documentation:**
 - **[DEMO_GUIDE.md](doc/DEMO_GUIDE.md)**: Demo narrative, talking points, and Q&A
 - **[TECHNICAL.md](doc/TECHNICAL.md)**: Architecture, implementation details, API documentation
 - **[FRAMEWORK_ALIGNMENT.md](doc/FRAMEWORK_ALIGNMENT.md)**: How we addressed framework recommendations
-- **[Telegram Bot Setup](lib/telegram/README.md)**: Telegram bot configuration and demo sequence
+
+**For troubleshooting and deployment guides, see the [docs/](docs/) folder.**
 
 ## Development
 
@@ -263,7 +277,7 @@ The application is deployed on Vercel at:
 
 ### Deployment Checklist
 
-For detailed deployment instructions, environment variables, and post-deployment verification, see **[DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)**.
+For detailed deployment instructions, environment variables, and post-deployment verification, see **[Deployment Checklist](docs/deployment/DEPLOYMENT_CHECKLIST.md)**.
 
 Key deployment steps:
 1. Set environment variables on Vercel (ANTHROPIC_API_KEY, TELEGRAM_BOT_TOKEN, NEXT_PUBLIC_APP_URL)

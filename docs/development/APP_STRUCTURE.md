@@ -113,7 +113,7 @@
 1. Create bot via @BotFather on Telegram
 2. Get bot token
 3. Add to `.env.local`: `TELEGRAM_BOT_TOKEN=your_token`
-4. For local testing: Enable polling mode (see LOCAL_TESTING_GUIDE.md)
+4. For local testing: Enable polling mode (see [Local Testing Guide](../getting-started/LOCAL_TESTING_GUIDE.md))
 
 ---
 
@@ -217,6 +217,6 @@ lib/
 
 ---
 
-**For detailed testing steps, see [LOCAL_TESTING_GUIDE.md](LOCAL_TESTING_GUIDE.md)**  
-**For quick start, see [QUICK_START.md](QUICK_START.md)**
+**For detailed testing steps, see [Local Testing Guide](../getting-started/LOCAL_TESTING_GUIDE.md)**  
+**For quick start, see [Quick Start Guide](../getting-started/QUICK_START.md)**
 

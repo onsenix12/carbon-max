@@ -396,10 +396,10 @@ PORT=3001 npm run dev
 
 ## 📚 Additional Resources
 
-- **Demo Guide**: `doc/DEMO_GUIDE.md`
-- **Telegram Setup**: `lib/telegram/README.md`
-- **Technical Docs**: `doc/TECHNICAL.md`
-- **Deployment**: `DEPLOYMENT_CHECKLIST.md`
+- **Demo Guide**: [Demo Guide](../doc/DEMO_GUIDE.md)
+- **Telegram Setup**: [Telegram Bot Setup](../setup/telegram-bot.md)
+- **Technical Docs**: [Technical Documentation](../doc/TECHNICAL.md)
+- **Deployment**: [Deployment Checklist](../deployment/DEPLOYMENT_CHECKLIST.md)
 
 ---
 
