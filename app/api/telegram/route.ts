@@ -661,7 +661,22 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
   const data = query.data;
   
   if (!chatId || !data) {
-    await getBot().answerCallbackQuery(query.id, { text: 'Error processing request' });
+    // Log the issue for debugging
+    logError(new Error('Missing chatId or data in callback query'), {
+      endpoint: 'handleCallbackQuery',
+      chatId: chatId || 'undefined',
+      data: data || 'undefined',
+      queryId: query.id,
+      hasMessage: !!query.message,
+      hasInlineMessageId: !!query.inline_message_id,
+    });
+    
+    try {
+      await getBot().answerCallbackQuery(query.id, { text: 'Error processing request' });
+    } catch (error) {
+      // If answering the callback query fails, log it but don't throw
+      logError(error, { endpoint: 'handleCallbackQuery-answerError', queryId: query.id });
+    }
     return;
   }
   
@@ -673,15 +688,35 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
       const routeId = data.replace('calc_', '');
       
       if (routeId === 'other') {
-        await getBot().sendMessage(chatId, 'Please enter your destination airport code (e.g., LHR, JFK, NRT)');
-        session.conversationState = 'awaiting_destination';
+        // Answer callback query first
         await getBot().answerCallbackQuery(query.id);
+        
+        // Then send message
+        try {
+          await getBot().sendMessage(chatId, 'Please enter your destination airport code (e.g., LHR, JFK, NRT)');
+          session.conversationState = 'awaiting_destination';
+        } catch (sendError) {
+          logError(sendError, {
+            endpoint: 'handleCallbackQuery-other',
+            chatId,
+          });
+        }
         return;
       }
       
       if (routeId === 'start') {
-        await handleCalculate(chatId);
+        // Answer callback query first
         await getBot().answerCallbackQuery(query.id);
+        
+        // Then handle calculate
+        try {
+          await handleCalculate(chatId);
+        } catch (calcError) {
+          logError(calcError, {
+            endpoint: 'handleCallbackQuery-start',
+            chatId,
+          });
+        }
         return;
       }
       
@@ -697,9 +732,35 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
           class: 'economy', // Default, will be updated
         };
         session.conversationState = 'awaiting_class';
-        await getBot().sendMessage(chatId, `✈️ Selected: ${route.destination_city} (${route.destination})\n\nSelect your travel class:`, buildClassKeyboard());
+        
+        // Always answer the callback query first to remove loading state
+        await getBot().answerCallbackQuery(query.id);
+        
+        // Then send the message (if this fails, at least the callback is answered)
+        try {
+          await getBot().sendMessage(chatId, `✈️ Selected: ${route.destination_city} (${route.destination})\n\nSelect your travel class:`, buildClassKeyboard());
+        } catch (sendError) {
+          logError(sendError, {
+            endpoint: 'handleCallbackQuery-sendMessage',
+            chatId,
+            routeId,
+          });
+          // The callback query is already answered, so the user won't see a loading state
+        }
+      } else {
+        // Route not found - answer callback first, then send error message
+        await getBot().answerCallbackQuery(query.id, { text: 'Route not found' });
+        
+        try {
+          await getBot().sendMessage(chatId, `❌ Route "${routeId}" not found. Please try selecting again.`, buildDestinationKeyboard());
+        } catch (sendError) {
+          logError(sendError, {
+            endpoint: 'handleCallbackQuery-sendMessage-routeNotFound',
+            chatId,
+            routeId,
+          });
+        }
       }
-      await getBot().answerCallbackQuery(query.id);
       return;
     }
     
@@ -982,8 +1043,41 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
     
     await getBot().answerCallbackQuery(query.id, { text: 'Unknown action' });
   } catch (error) {
-    logError(error, { endpoint: 'handleCallbackQuery', chatId: query.message?.chat.id });
-    await getBot().answerCallbackQuery(query.id, { text: 'Error processing request' });
+    // Log the error with full context
+    logError(error, {
+      endpoint: 'handleCallbackQuery',
+      chatId: query.message?.chat.id || 'undefined',
+      callbackData: query.data || 'undefined',
+      queryId: query.id,
+    });
+    
+    // Try to answer the callback query with an error message
+    try {
+      await getBot().answerCallbackQuery(query.id, { text: 'Error processing request' });
+    } catch (answerError) {
+      // If answering fails, log it but don't throw
+      logError(answerError, {
+        endpoint: 'handleCallbackQuery-answerError',
+        originalError: error instanceof Error ? error.message : String(error),
+        queryId: query.id,
+      });
+    }
+    
+    // If we have a chatId, send a user-friendly error message
+    if (chatId) {
+      try {
+        await getBot().sendMessage(
+          chatId,
+          '❌ Sorry, I encountered an error processing your request. Please try again or use /help for available commands.'
+        );
+      } catch (sendError) {
+        // If sending the message fails, log it but don't throw
+        logError(sendError, {
+          endpoint: 'handleCallbackQuery-sendError',
+          chatId,
+        });
+      }
+    }
   }
 }
 
