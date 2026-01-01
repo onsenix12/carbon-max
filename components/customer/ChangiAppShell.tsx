@@ -25,7 +25,7 @@ export default function ChangiAppShell({ children }: ChangiAppShellProps) {
   const headerBg = tierHeaderColors[currentTier.id] || tierHeaderColors.seedling;
 
   const navItems = [
-    { icon: Home, label: 'Home', path: '/' },
+    { icon: Home, label: 'Home', path: '/home' },
     { icon: Calculator, label: 'Calculator', path: '/calculator' },
     { icon: ShoppingBag, label: 'Shop', path: '/shop' },
     { icon: Gift, label: 'Rewards', path: '/rewards' },
@@ -34,8 +34,8 @@ export default function ChangiAppShell({ children }: ChangiAppShellProps) {
 
   const isActive = (path: string) => {
     if (!pathname) return false;
-    if (path === '/') {
-      return pathname === '/' || pathname === '/customer';
+    if (path === '/home') {
+      return pathname === '/home';
     }
     return pathname.startsWith(path);
   };
