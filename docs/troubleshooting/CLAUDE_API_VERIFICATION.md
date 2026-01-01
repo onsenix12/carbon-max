@@ -137,7 +137,7 @@ Check the server logs to see if the API was called.
 The app now:
 - ✅ Properly logs when the API is called vs when mocks are used
 - ✅ Shows clear error messages if the API call fails
-- ✅ Uses the latest Anthropic API version (2024-01-01)
+- ✅ Uses the latest Anthropic API version (2023-10-16)
 - ✅ Falls back to mock responses gracefully if API fails (so the app still works)
 
 ## Verification Checklist

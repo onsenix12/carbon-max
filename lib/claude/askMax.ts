@@ -279,7 +279,7 @@ export async function askMax(
         headers: {
           'Content-Type': 'application/json',
           'x-api-key': apiKey,
-          'anthropic-version': '2024-01-01',
+          'anthropic-version': '2023-10-16',
         },
         body: JSON.stringify({
           model: 'claude-3-5-sonnet-20241022',

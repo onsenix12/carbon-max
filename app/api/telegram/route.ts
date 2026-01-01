@@ -407,6 +407,40 @@ async function handleJourney(chatId: number) {
 }
 
 /**
+ * Check if a URL is valid for Telegram inline keyboard buttons
+ * Telegram doesn't allow localhost URLs
+ */
+function isValidTelegramUrl(url: string): boolean {
+  try {
+    const urlObj = new URL(url);
+    // Telegram doesn't allow localhost, 127.0.0.1, or private IPs
+    const hostname = urlObj.hostname.toLowerCase();
+    return !hostname.includes('localhost') && 
+           hostname !== '127.0.0.1' && 
+           !hostname.startsWith('192.168.') &&
+           !hostname.startsWith('10.') &&
+           !hostname.startsWith('172.16.') &&
+           !hostname.startsWith('172.17.') &&
+           !hostname.startsWith('172.18.') &&
+           !hostname.startsWith('172.19.') &&
+           !hostname.startsWith('172.20.') &&
+           !hostname.startsWith('172.21.') &&
+           !hostname.startsWith('172.22.') &&
+           !hostname.startsWith('172.23.') &&
+           !hostname.startsWith('172.24.') &&
+           !hostname.startsWith('172.25.') &&
+           !hostname.startsWith('172.26.') &&
+           !hostname.startsWith('172.27.') &&
+           !hostname.startsWith('172.28.') &&
+           !hostname.startsWith('172.29.') &&
+           !hostname.startsWith('172.30.') &&
+           !hostname.startsWith('172.31.');
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Handle /shop command
  */
 async function handleShop(chatId: number, category?: string) {
@@ -431,13 +465,19 @@ async function handleShop(chatId: number, category?: string) {
   
   message += `Use the web app for full shop listings and filters.`;
   
-  await sendLongMessage(chatId, message, {
-    reply_markup: {
-      inline_keyboard: [
-        [{ text: '🌐 Open Web App', url: AppUrls.shop() }]
-      ]
-    }
-  });
+  // Only include URL button if it's a valid public URL (not localhost)
+  const shopUrl = AppUrls.shop();
+  const keyboardOptions = isValidTelegramUrl(shopUrl)
+    ? {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '🌐 Open Web App', url: shopUrl }]
+          ]
+        }
+      }
+    : undefined;
+  
+  await sendLongMessage(chatId, message, keyboardOptions);
 }
 
 /**
