@@ -305,8 +305,8 @@ export class FlightCalculationFlow {
     });
 
     // Update session
-    this.session.currentFlight.emissionsKg = result.perPassenger.emissions;
-    this.session.currentFlight.emissionsWithRF = result.perPassenger.emissionsWithRF;
+    this.session.currentFlight.emissionsKg = result.result.perPassenger.emissions;
+    this.session.currentFlight.emissionsWithRF = result.result.perPassenger.emissionsWithRF;
     this.session.currentFlight.class = classType;
 
     // Build result message
@@ -316,21 +316,21 @@ export class FlightCalculationFlow {
     message += `*Aircraft Efficiency:* ${route.aircraft_efficiency_rating} Rating\n\n`;
     
     message += `*Carbon Footprint:*\n`;
-    message += `• Without RF: *${result.perPassenger.emissions.toLocaleString()} kg CO₂e*\n`;
-    message += `• With RF: *${result.perPassenger.emissionsWithRF.toLocaleString()} kg CO₂e*\n\n`;
+    message += `• Without RF: *${result.result.perPassenger.emissions.toLocaleString()} kg CO₂e*\n`;
+    message += `• With RF: *${result.result.perPassenger.emissionsWithRF.toLocaleString()} kg CO₂e*\n\n`;
     
     message += `🌿 *SAF-First Recommendation*\n`;
     message += `For aviation, SAF (Sustainable Aviation Fuel) is the *most impactful choice* — it directly reduces emissions at the source.\n\n`;
     
     // Calculate SAF options
-    const saf25Cost = ((result.perPassenger.emissions * 0.25) / 2.27) * 2.5;
-    const saf50Cost = ((result.perPassenger.emissions * 0.50) / 2.27) * 2.5;
+    const saf25Cost = ((result.result.perPassenger.emissions * 0.25) / 2.27) * 2.5;
+    const saf50Cost = ((result.result.perPassenger.emissions * 0.50) / 2.27) * 2.5;
     
     message += `*SAF Contribution Options:*\n`;
-    message += `🌿 25% SAF: S$${saf25Cost.toFixed(2)} — ${((result.perPassenger.emissions * 0.25) / 2.27).toFixed(1)}L\n`;
-    message += `🌿 50% SAF: S$${saf50Cost.toFixed(2)} — ${((result.perPassenger.emissions * 0.50) / 2.27).toFixed(1)}L\n`;
-    message += `🌿 75% SAF: S$${(saf25Cost * 3).toFixed(2)} — ${((result.perPassenger.emissions * 0.75) / 2.27).toFixed(1)}L\n`;
-    message += `🌿 100% SAF: S$${(saf25Cost * 4).toFixed(2)} — ${((result.perPassenger.emissions * 1.0) / 2.27).toFixed(1)}L\n\n`;
+    message += `🌿 25% SAF: S$${saf25Cost.toFixed(2)} — ${((result.result.perPassenger.emissions * 0.25) / 2.27).toFixed(1)}L\n`;
+    message += `🌿 50% SAF: S$${saf50Cost.toFixed(2)} — ${((result.result.perPassenger.emissions * 0.50) / 2.27).toFixed(1)}L\n`;
+    message += `🌿 75% SAF: S$${(saf25Cost * 3).toFixed(2)} — ${((result.result.perPassenger.emissions * 0.75) / 2.27).toFixed(1)}L\n`;
+    message += `🌿 100% SAF: S$${(saf25Cost * 4).toFixed(2)} — ${((result.result.perPassenger.emissions * 1.0) / 2.27).toFixed(1)}L\n\n`;
     
     message += `💡 *Why SAF?*\n`;
     message += `• Directly reduces aviation emissions at the source\n`;
@@ -342,7 +342,7 @@ export class FlightCalculationFlow {
     await sendLongMessage(
       chatId,
       message,
-      { parse_mode: 'Markdown', ...buildSAFKeyboard(result.perPassenger.emissions) }
+      { parse_mode: 'Markdown', ...buildSAFKeyboard(result.result.perPassenger.emissions) }
     );
   }
 
