@@ -55,7 +55,7 @@ export function createErrorResponse(
     success: false,
     error,
     ...(code && { code }),
-    ...(details && { details }),
+    ...(details && typeof details === 'object' && details !== null ? { details } : {}),
   };
 }
 

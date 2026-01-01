@@ -21,13 +21,9 @@ export const validationSchemas = {
   
   chatMessage: z.string().min(1, 'Message cannot be empty').max(1000, 'Message too long'),
   
-  period: z.enum(['today', 'week', 'month'], {
-    errorMap: () => ({ message: 'Period must be: today, week, or month' }),
-  }),
+  period: z.enum(['today', 'week', 'month']),
   
-  view: z.enum(['overview', 'saf', 'circularity'], {
-    errorMap: () => ({ message: 'View must be: overview, saf, or circularity' }),
-  }),
+  view: z.enum(['overview', 'saf', 'circularity']),
 } as const;
 
 /**
@@ -160,7 +156,7 @@ export function validateRequest<T>(
     return { success: true, data: validated };
   } catch (error) {
     if (error instanceof z.ZodError) {
-      const errorMessage = error.errors.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
+      const errorMessage = error.issues.map((e: z.ZodIssue) => `${e.path.join('.')}: ${e.message}`).join(', ');
       return { success: false, error: errorMessage, details: error };
     }
     return { success: false, error: 'Validation failed', details: error as z.ZodError };

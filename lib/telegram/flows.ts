@@ -442,12 +442,12 @@ export class FlightCalculationFlow {
       message += `🎉 *Tier Upgrade!*\n`;
       message += `You've reached *${updatedTier.name} Tier*!\n\n`;
     } else if (progress.progressToNext?.nextTier) {
-      const progressPercent = progress.progressPercent || 0;
+      const progressPercent = progress.progressToNext.progressPercent || 0;
       const progressBar = buildProgressBar(progressPercent);
       
       message += `📊 *Progress to ${progress.progressToNext.nextTier.name}:*\n`;
       message += `${progressBar} ${progressPercent.toFixed(0)}%\n`;
-      message += `${progress.pointsToNextTier || 0} points needed\n\n`;
+      message += `${progress.progressToNext.pointsNeeded || 0} points needed\n\n`;
     }
 
     message += `🙏 Thank you for contributing to sustainable aviation!`;
@@ -564,12 +564,12 @@ export class CircularityActionFlow {
       message += `🎊 *Tier Upgrade!*\n`;
       message += `You've reached *${updatedTier.name} Tier*!\n\n`;
     } else if (progress.progressToNext?.nextTier) {
-      const progressPercent = progress.progressPercent || 0;
+      const progressPercent = progress.progressToNext.progressPercent || 0;
       const progressBar = buildProgressBar(progressPercent);
       
       message += `📊 *Tier Progress:*\n`;
       message += `${progressBar} ${progressPercent.toFixed(0)}%\n`;
-      message += `${progress.pointsToNextTier || 0} points to ${progress.progressToNext.nextTier.name}\n\n`;
+      message += `${progress.progressToNext.pointsNeeded || 0} points to ${progress.progressToNext.nextTier.name}\n\n`;
     }
 
     message += `🙏 Thank you for contributing to Changi's circular economy!`;
@@ -667,8 +667,6 @@ export class ImpactStoryFlow {
             amount: this.session.safContribution.amount,
             liters: this.session.safContribution.liters,
             emissionsReduced: this.session.safContribution.co2eAvoided,
-            provider: 'neste_singapore',
-            timestamp: new Date().toISOString(),
           } : undefined,
         } : undefined,
         transport: [],
@@ -694,8 +692,8 @@ export class ImpactStoryFlow {
         },
         totalEcoPoints: tierInfo.points,
         lifetimeEcoPoints: tierInfo.points,
-        pointsToNextTier: tierInfo.progress.pointsToNextTier,
-        progressPercent: tierInfo.progress.progressPercent,
+        pointsToNextTier: tierInfo.progress.pointsToNextTier ?? null,
+        progressPercent: tierInfo.progress.progressPercent ?? 0,
       };
 
       // Generate story
