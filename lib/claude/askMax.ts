@@ -267,16 +267,19 @@ export async function askMax(
     content: `${contextString}\n\n${message}`,
   });
 
-  // In production, this would call the Claude API
-  // For now, return a mock response that can be replaced
-  if (process.env.ANTHROPIC_API_KEY) {
+  // Call the Claude API if API key is available
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  
+  if (apiKey) {
     try {
+      console.log('[AskMax] ✅ Attempting to call Claude API with model: claude-3-5-sonnet-20241022');
+      
       const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': process.env.ANTHROPIC_API_KEY,
-          'anthropic-version': '2023-06-01',
+          'x-api-key': apiKey,
+          'anthropic-version': '2024-01-01',
         },
         body: JSON.stringify({
           model: 'claude-3-5-sonnet-20241022',
@@ -290,15 +293,39 @@ export async function askMax(
       });
 
       if (!response.ok) {
-        throw new Error(`Claude API error: ${response.statusText}`);
+        const errorText = await response.text();
+        let errorMessage = `Claude API error: ${response.status} ${response.statusText}`;
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage += ` - ${errorData.error?.message || errorText}`;
+        } catch {
+          errorMessage += ` - ${errorText}`;
+        }
+        console.error('[AskMax] ❌ Claude API request failed:', errorMessage);
+        console.warn('[AskMax] ⚠️ Falling back to mock response due to API error');
+        // Fall through to mock response
+      } else {
+        const data = await response.json();
+        const responseText = data.content[0]?.text;
+        
+        if (!responseText) {
+          console.error('[AskMax] ❌ Claude API returned empty response');
+          console.warn('[AskMax] ⚠️ Falling back to mock response');
+          // Fall through to mock response
+        } else {
+          console.log('[AskMax] ✅ Successfully received response from Claude API');
+          return responseText;
+        }
       }
-
-      const data = await response.json();
-      return data.content[0].text;
     } catch (error) {
-      console.error('Claude API error:', error);
-      // Fallback to mock response
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error('[AskMax] ❌ Claude API error - falling back to mock response:', errorMessage);
+      console.error('[AskMax] Error details:', error);
+      // Fall through to mock response
     }
+  } else {
+    console.warn('[AskMax] ⚠️ ANTHROPIC_API_KEY not set in environment variables - using mock responses');
+    console.warn('[AskMax] To use Claude API, set ANTHROPIC_API_KEY in your .env.local file');
   }
 
   // Mock response for development/demo

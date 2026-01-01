@@ -84,15 +84,19 @@ export async function generateImpactStory(
     }
   }
 
-  // In production, this would call the Claude API
-  if (process.env.ANTHROPIC_API_KEY) {
+  // Call the Claude API if API key is available
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  
+  if (apiKey) {
     try {
+      console.log('[ImpactStories] ✅ Attempting to call Claude API to generate impact story');
+      
       const response = await fetch('https://api.anthropic.com/v1/messages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': process.env.ANTHROPIC_API_KEY,
-          'anthropic-version': '2023-06-01',
+          'x-api-key': apiKey,
+          'anthropic-version': '2024-01-01',
         },
         body: JSON.stringify({
           model: 'claude-3-5-sonnet-20241022',
@@ -106,13 +110,40 @@ export async function generateImpactStory(
         }),
       });
 
-      if (response.ok) {
+      if (!response.ok) {
+        const errorText = await response.text();
+        let errorMessage = `Claude API error: ${response.status} ${response.statusText}`;
+        try {
+          const errorData = JSON.parse(errorText);
+          errorMessage += ` - ${errorData.error?.message || errorText}`;
+        } catch {
+          errorMessage += ` - ${errorText}`;
+        }
+        console.error('[ImpactStories] ❌ Claude API request failed:', errorMessage);
+        console.warn('[ImpactStories] ⚠️ Falling back to mock response due to API error');
+        // Fall through to mock response
+      } else {
         const data = await response.json();
-        return data.content[0].text;
+        const responseText = data.content[0]?.text;
+        
+        if (!responseText) {
+          console.error('[ImpactStories] ❌ Claude API returned empty response');
+          console.warn('[ImpactStories] ⚠️ Falling back to mock response');
+          // Fall through to mock response
+        } else {
+          console.log('[ImpactStories] ✅ Successfully received response from Claude API');
+          return responseText;
+        }
       }
     } catch (error) {
-      console.error('Claude API error:', error);
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      console.error('[ImpactStories] ❌ Claude API error - falling back to mock response:', errorMessage);
+      console.error('[ImpactStories] Error details:', error);
+      // Fall through to mock response
     }
+  } else {
+    console.warn('[ImpactStories] ⚠️ ANTHROPIC_API_KEY not set in environment variables - using mock responses');
+    console.warn('[ImpactStories] To use Claude API, set ANTHROPIC_API_KEY in your .env.local file');
   }
 
   // Mock responses for development/demo
