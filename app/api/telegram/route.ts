@@ -19,22 +19,29 @@ import { ActivityLogger } from '@/lib/activity/logger';
 import { AppUrls } from '@/lib/config';
 import { logError } from '@/lib/utils/errors';
 
-// Initialize bot
-const token = process.env.TELEGRAM_BOT_TOKEN;
-if (!token) {
-  throw new Error('TELEGRAM_BOT_TOKEN is not set in environment variables');
-}
+// Initialize bot lazily to avoid module-level errors
+let bot: TelegramBot | null = null;
+let handlersSetup = false;
 
-// Use polling in development, webhook in production
+// Determine environment
 const isDevelopment = process.env.NODE_ENV === 'development' || !process.env.VERCEL;
 
-// Initialize bot with polling in development, webhook in production
-const bot = isDevelopment 
-  ? new TelegramBot(token, { polling: true })
-  : new TelegramBot(token, { polling: false });
+function getBot(): TelegramBot {
+  if (!bot) {
+    const token = process.env.TELEGRAM_BOT_TOKEN;
+    if (!token) {
+      throw new Error('TELEGRAM_BOT_TOKEN is not set in environment variables. Please set it in Vercel project settings.');
+    }
 
-// Module-level flag to ensure handlers are set up only once
-let handlersSetup = false;
+    // Initialize bot with polling in development, webhook in production
+    bot = isDevelopment 
+      ? new TelegramBot(token, { polling: true })
+      : new TelegramBot(token, { polling: false });
+  }
+  return bot;
+}
+
+// Module-level flag to ensure handlers are set up only once (moved after getBot definition)
 
 // User session storage (in-memory, keyed by chatId)
 interface UserSession {
@@ -319,14 +326,14 @@ async function handleCalculate(chatId: number, args?: string) {
     
     if (route) {
       session.conversationState = 'awaiting_class';
-      await bot.sendMessage(chatId, `✈️ Found route to ${route.destination_city} (${route.destination})\n\nSelect your travel class:`, buildClassKeyboard());
+      await getBot().sendMessage(chatId, `✈️ Found route to ${route.destination_city} (${route.destination})\n\nSelect your travel class:`, buildClassKeyboard());
     } else {
-      await bot.sendMessage(chatId, `📍 Destination "${args}" not found. Please select from the list:`, buildDestinationKeyboard());
+      await getBot().sendMessage(chatId, `📍 Destination "${args}" not found. Please select from the list:`, buildDestinationKeyboard());
     }
   } else {
     // Show destination selection
     session.conversationState = 'awaiting_destination';
-    await bot.sendMessage(chatId, '✈️ Select your destination:', buildDestinationKeyboard());
+    await getBot().sendMessage(chatId, '✈️ Select your destination:', buildDestinationKeyboard());
   }
 }
 
@@ -392,7 +399,7 @@ async function handleJourney(chatId: number) {
     
     await sendLongMessage(chatId, message);
   } else {
-    await bot.sendMessage(
+    await getBot().sendMessage(
       chatId,
       '📊 You haven\'t started a journey yet.\n\nUse /calculate to calculate your flight emissions and start tracking your impact!'
     );
@@ -470,10 +477,10 @@ async function handleEco(chatId: number, action?: string) {
       
       await sendLongMessage(chatId, message);
     } else {
-      await bot.sendMessage(chatId, `Action "${action}" not found. Use /eco to see available actions.`);
+      await getBot().sendMessage(chatId, `Action "${action}" not found. Use /eco to see available actions.`);
     }
   } else {
-    await bot.sendMessage(chatId, '♻️ Log a Circularity Action\n\nSelect an action to log:', buildCircularityKeyboard());
+    await getBot().sendMessage(chatId, '♻️ Log a Circularity Action\n\nSelect an action to log:', buildCircularityKeyboard());
   }
 }
 
@@ -508,14 +515,14 @@ async function handleTier(chatId: number) {
  */
 async function handleAsk(chatId: number, question?: string) {
   if (!question || !question.trim()) {
-    await bot.sendMessage(
+    await getBot().sendMessage(
       chatId,
       '💬 Ask Max anything about sustainability!\n\nExample: /ask Why is SAF better than offsets?'
     );
     return;
   }
   
-  await bot.sendChatAction(chatId, 'typing');
+  await getBot().sendChatAction(chatId, 'typing');
   
   try {
     const session = getUserSession(chatId);
@@ -566,7 +573,7 @@ async function handleAsk(chatId: number, question?: string) {
     await sendLongMessage(chatId, response);
   } catch (error) {
     logError(error, { endpoint: 'handleAsk', chatId });
-    await bot.sendMessage(
+    await getBot().sendMessage(
       chatId,
       'Sorry, I encountered an error. Please try again later.'
     );
@@ -577,7 +584,7 @@ async function handleAsk(chatId: number, question?: string) {
  * Handle /impact command
  */
 async function handleImpact(chatId: number) {
-  await bot.sendChatAction(chatId, 'typing');
+  await getBot().sendChatAction(chatId, 'typing');
   
   try {
     const session = getUserSession(chatId);
@@ -639,7 +646,7 @@ async function handleImpact(chatId: number) {
     await sendLongMessage(chatId, message);
   } catch (error) {
     logError(error, { endpoint: 'handleImpact', chatId });
-    await bot.sendMessage(
+    await getBot().sendMessage(
       chatId,
       'Sorry, I couldn\'t generate your impact story. Please make sure you have some actions logged first!'
     );
@@ -654,7 +661,7 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
   const data = query.data;
   
   if (!chatId || !data) {
-    await bot.answerCallbackQuery(query.id, { text: 'Error processing request' });
+    await getBot().answerCallbackQuery(query.id, { text: 'Error processing request' });
     return;
   }
   
@@ -666,15 +673,15 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
       const routeId = data.replace('calc_', '');
       
       if (routeId === 'other') {
-        await bot.sendMessage(chatId, 'Please enter your destination airport code (e.g., LHR, JFK, NRT)');
+        await getBot().sendMessage(chatId, 'Please enter your destination airport code (e.g., LHR, JFK, NRT)');
         session.conversationState = 'awaiting_destination';
-        await bot.answerCallbackQuery(query.id);
+        await getBot().answerCallbackQuery(query.id);
         return;
       }
       
       if (routeId === 'start') {
         await handleCalculate(chatId);
-        await bot.answerCallbackQuery(query.id);
+        await getBot().answerCallbackQuery(query.id);
         return;
       }
       
@@ -690,9 +697,9 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
           class: 'economy', // Default, will be updated
         };
         session.conversationState = 'awaiting_class';
-        await bot.sendMessage(chatId, `✈️ Selected: ${route.destination_city} (${route.destination})\n\nSelect your travel class:`, buildClassKeyboard());
+        await getBot().sendMessage(chatId, `✈️ Selected: ${route.destination_city} (${route.destination})\n\nSelect your travel class:`, buildClassKeyboard());
       }
-      await bot.answerCallbackQuery(query.id);
+      await getBot().answerCallbackQuery(query.id);
       return;
     }
     
@@ -701,20 +708,20 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
       const classType = data.replace('class_', '') as 'economy' | 'business' | 'first';
       
       if (!session.conversationState || session.conversationState !== 'awaiting_class') {
-        await bot.answerCallbackQuery(query.id, { text: 'Please select a destination first' });
+        await getBot().answerCallbackQuery(query.id, { text: 'Please select a destination first' });
         return;
       }
       
       // Find the route from session
       if (!session.currentFlight || !session.currentFlight.routeId) {
-        await bot.answerCallbackQuery(query.id, { text: 'Please select a destination first' });
+        await getBot().answerCallbackQuery(query.id, { text: 'Please select a destination first' });
         return;
       }
       
       const route = routesData.routes.find(r => r.id === session.currentFlight!.routeId);
       
       if (!route) {
-        await bot.answerCallbackQuery(query.id, { text: 'Route not found' });
+        await getBot().answerCallbackQuery(query.id, { text: 'Route not found' });
         return;
       }
       
@@ -762,7 +769,7 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
         await sendProactiveNudge(chatId, session);
       }, 2000); // Wait 2 seconds after showing results
       
-      await bot.answerCallbackQuery(query.id);
+      await getBot().answerCallbackQuery(query.id);
       return;
     }
     
@@ -772,7 +779,7 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
       const percent = parseInt(percentStr);
       
       if (isNaN(percent) || !session.currentFlight) {
-        await bot.answerCallbackQuery(query.id, { text: 'Please calculate a flight first' });
+        await getBot().answerCallbackQuery(query.id, { text: 'Please calculate a flight first' });
         return;
       }
       
@@ -807,14 +814,14 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
       
       // Step 4: Confirm contribution
       await sendLongMessage(chatId, confirmMsg, buildConfirmationKeyboard('saf'));
-      await bot.answerCallbackQuery(query.id);
+      await getBot().answerCallbackQuery(query.id);
       return;
     }
     
     // Handle SAF confirmation (saf_confirm)
     if (data === 'saf_confirm') {
       if (!session.safContribution || !session.currentFlight) {
-        await bot.answerCallbackQuery(query.id, { text: 'No pending SAF contribution' });
+        await getBot().answerCallbackQuery(query.id, { text: 'No pending SAF contribution' });
         return;
       }
       
@@ -882,15 +889,15 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
         await sendProactiveNudge(chatId, session);
       }, 2000);
       
-      await bot.answerCallbackQuery(query.id, { text: 'SAF contribution confirmed!' });
+      await getBot().answerCallbackQuery(query.id, { text: 'SAF contribution confirmed!' });
       return;
     }
     
     // Handle SAF cancellation
     if (data === 'saf_cancel') {
       session.safContribution = undefined;
-      await bot.sendMessage(chatId, 'SAF contribution cancelled.');
-      await bot.answerCallbackQuery(query.id);
+      await getBot().sendMessage(chatId, 'SAF contribution cancelled.');
+      await getBot().answerCallbackQuery(query.id);
       return;
     }
     
@@ -941,9 +948,9 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
           await sendProactiveNudge(chatId, session);
         }, 2000);
         
-        await bot.answerCallbackQuery(query.id, { text: 'Action logged!' });
+        await getBot().answerCallbackQuery(query.id, { text: 'Action logged!' });
       } else {
-        await bot.answerCallbackQuery(query.id, { text: 'Action not found' });
+        await getBot().answerCallbackQuery(query.id, { text: 'Action not found' });
       }
       return;
     }
@@ -952,7 +959,7 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
     if (data.startsWith('nudge_dismiss_')) {
       const nudgeId = data.replace('nudge_dismiss_', '');
       markNudgeDismissed(session.userId, nudgeId);
-      await bot.answerCallbackQuery(query.id, { text: 'Nudge dismissed' });
+      await getBot().answerCallbackQuery(query.id, { text: 'Nudge dismissed' });
       return;
     }
     
@@ -969,14 +976,14 @@ async function handleCallbackQuery(query: TelegramBot.CallbackQuery) {
         const ecoAction = action.replace('eco_', '');
         await handleEco(chatId, ecoAction);
       }
-      await bot.answerCallbackQuery(query.id);
+      await getBot().answerCallbackQuery(query.id);
       return;
     }
     
-    await bot.answerCallbackQuery(query.id, { text: 'Unknown action' });
+    await getBot().answerCallbackQuery(query.id, { text: 'Unknown action' });
   } catch (error) {
     logError(error, { endpoint: 'handleCallbackQuery', chatId: query.message?.chat.id });
-    await bot.answerCallbackQuery(query.id, { text: 'Error processing request' });
+    await getBot().answerCallbackQuery(query.id, { text: 'Error processing request' });
   }
 }
 
@@ -1050,7 +1057,7 @@ async function sendProactiveNudge(chatId: number, session: UserSession) {
  * Handle free-form messages (pass to Ask Max)
  */
 async function handleFreeFormMessage(chatId: number, text: string) {
-  await bot.sendChatAction(chatId, 'typing');
+  await getBot().sendChatAction(chatId, 'typing');
   
   try {
     const session = getUserSession(chatId);
@@ -1114,7 +1121,7 @@ async function handleFreeFormMessage(chatId: number, text: string) {
     await sendLongMessage(chatId, response, inlineKeyboard);
   } catch (error) {
     logError(error, { endpoint: 'handleFreeFormMessage', chatId });
-    await bot.sendMessage(
+    await getBot().sendMessage(
       chatId,
       'Sorry, I encountered an error. Please try again later.'
     );
@@ -1179,7 +1186,7 @@ async function processUpdate(update: any) {
             await sendLongMessage(chatId, helpMsg);
             break;
           default:
-            await bot.sendMessage(chatId, 'Unknown command. Type /help for available commands.');
+            await getBot().sendMessage(chatId, 'Unknown command. Type /help for available commands.');
         }
       } else {
         // Handle text messages (main menu buttons or free-form)
@@ -1205,9 +1212,9 @@ async function processUpdate(update: any) {
               class: 'economy',
             };
             session.conversationState = 'awaiting_class';
-            await bot.sendMessage(chatId, `✈️ Found: ${route.destination_city} (${route.destination})\n\nSelect your travel class:`, buildClassKeyboard());
+            await getBot().sendMessage(chatId, `✈️ Found: ${route.destination_city} (${route.destination})\n\nSelect your travel class:`, buildClassKeyboard());
           } else {
-            await bot.sendMessage(chatId, `📍 Destination "${text}" not found. Please try again with an airport code (e.g., LHR, JFK, NRT) or select from the list:`, buildDestinationKeyboard());
+            await getBot().sendMessage(chatId, `📍 Destination "${text}" not found. Please try again with an airport code (e.g., LHR, JFK, NRT) or select from the list:`, buildDestinationKeyboard());
           }
         } else if (textLower.includes('calculate flight') || textLower.includes('calculate')) {
           await handleCalculate(chatId);
@@ -1222,7 +1229,7 @@ async function processUpdate(update: any) {
         } else if (textLower.includes('log action') || textLower.includes('circularity')) {
           await handleEco(chatId);
         } else if (textLower.includes('ask max') || textLower.includes('ask')) {
-          await bot.sendMessage(chatId, '💬 What would you like to ask Max? Type your question.');
+          await getBot().sendMessage(chatId, '💬 What would you like to ask Max? Type your question.');
         } else if (textLower.includes('my impact') || textLower.includes('impact')) {
           await handleImpact(chatId);
         } else if (text.trim()) {
@@ -1239,32 +1246,37 @@ async function processUpdate(update: any) {
 // Set up event handlers for polling mode (development only)
 // This must be after processUpdate is defined
 if (isDevelopment && !handlersSetup) {
-  handlersSetup = true;
-  
-  bot.on('message', async (msg) => {
-    await processUpdate({ message: msg });
-  });
-  
-  bot.on('callback_query', async (query) => {
-    await processUpdate({ callback_query: query });
-  });
-  
-  bot.on('polling_error', (error) => {
-    console.error('Telegram polling error:', error);
-  });
-  
-  bot.on('webhook_error', (error) => {
-    console.error('Telegram webhook error:', error);
-  });
-  
-  // Delete any existing webhook when starting in polling mode
-  bot.deleteWebHook().then(() => {
-    console.log('🤖 Telegram bot started in POLLING mode (local development)');
-    console.log('💡 For production, use webhook mode instead');
-  }).catch((error) => {
-    console.error('Failed to delete webhook:', error);
-    console.log('🤖 Telegram bot started in POLLING mode (local development)');
-  });
+  try {
+    const botInstance = getBot();
+    handlersSetup = true;
+    
+    botInstance.on('message', async (msg) => {
+      await processUpdate({ message: msg });
+    });
+    
+    botInstance.on('callback_query', async (query) => {
+      await processUpdate({ callback_query: query });
+    });
+    
+    botInstance.on('polling_error', (error) => {
+      console.error('Telegram polling error:', error);
+    });
+    
+    botInstance.on('webhook_error', (error) => {
+      console.error('Telegram webhook error:', error);
+    });
+    
+    // Delete any existing webhook when starting in polling mode
+    botInstance.deleteWebHook().then(() => {
+      console.log('🤖 Telegram bot started in POLLING mode (local development)');
+      console.log('💡 For production, use webhook mode instead');
+    }).catch((error) => {
+      console.error('Failed to delete webhook:', error);
+      console.log('🤖 Telegram bot started in POLLING mode (local development)');
+    });
+  } catch (error) {
+    console.error('Failed to initialize bot for polling:', error);
+  }
 }
 
 /**
@@ -1272,10 +1284,29 @@ if (isDevelopment && !handlersSetup) {
  */
 export async function POST(request: NextRequest) {
   try {
+    // Initialize bot if not already initialized
+    getBot();
+    
     const body = await request.json();
     await processUpdate(body);
     return NextResponse.json({ ok: true });
-  } catch (error) {
+  } catch (error: any) {
+    // Provide helpful error message if token is missing
+    if (error?.message?.includes('TELEGRAM_BOT_TOKEN')) {
+      console.error('❌ Telegram Bot Error:', error.message);
+      console.error('💡 Please set TELEGRAM_BOT_TOKEN in Vercel project settings:');
+      console.error('   1. Go to Vercel Dashboard → Your Project → Settings → Environment Variables');
+      console.error('   2. Add TELEGRAM_BOT_TOKEN with your bot token');
+      console.error('   3. Redeploy your application');
+      return NextResponse.json(
+        { 
+          error: 'Bot configuration error',
+          message: 'TELEGRAM_BOT_TOKEN is not set. Please configure it in Vercel environment variables.'
+        },
+        { status: 500 }
+      );
+    }
+    
     logError(error, { endpoint: '/api/telegram' });
     return NextResponse.json(
       { error: 'Internal server error' },

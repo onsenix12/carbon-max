@@ -26,7 +26,10 @@ curl -F "url=https://changi-carbon.vercel.app/api/telegram" \
   https://api.telegram.org/bot<YOUR_TELEGRAM_BOT_TOKEN>/setWebhook
 ```
 
-**Important:** Replace `<YOUR_TELEGRAM_BOT_TOKEN>` with your actual bot token.
+**Important:** 
+- Replace `<YOUR_TELEGRAM_BOT_TOKEN>` with your actual bot token
+- Replace `https://changi-carbon.vercel.app` with your actual Vercel deployment URL
+- The webhook URL must be `/api/telegram` (not `/api/telegram/webhook`)
 
 ### Verify Webhook:
 ```bash
@@ -34,8 +37,15 @@ curl https://api.telegram.org/bot<YOUR_TELEGRAM_BOT_TOKEN>/getWebhookInfo
 ```
 
 Expected response should show:
-- `url`: `https://changi-carbon.vercel.app/api/telegram`
+- `url`: `https://your-app.vercel.app/api/telegram`
 - `pending_update_count`: `0` (or low number)
+
+### Quick Verification Script:
+```bash
+node scripts/verify-telegram-webhook.js <YOUR_BOT_TOKEN> https://your-app.vercel.app
+```
+
+**If the bot doesn't work, see [TELEGRAM_TROUBLESHOOTING.md](./TELEGRAM_TROUBLESHOOTING.md) for detailed troubleshooting steps.**
 
 ---
 
