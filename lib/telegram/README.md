@@ -56,13 +56,13 @@ Once your app is deployed, set the webhook URL:
 ```bash
 curl -X POST "https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook" \
   -H "Content-Type: application/json" \
-  -d '{"url": "https://your-domain.com/api/telegram/webhook"}'
+  -d '{"url": "https://your-domain.com/api/telegram"}'
 ```
 
 Or use the Telegram Bot API:
 
 ```
-https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=https://your-domain.com/api/telegram/webhook
+https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook?url=https://your-domain.com/api/telegram
 ```
 
 ## 6. Create QR Code for Bot Link

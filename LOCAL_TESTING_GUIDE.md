@@ -294,7 +294,7 @@ You can immediately start chatting with your bot on Telegram!
    ```bash
    curl -X POST "https://api.telegram.org/bot<YOUR_BOT_TOKEN>/setWebhook" \
      -H "Content-Type: application/json" \
-     -d '{"url": "https://abc123.ngrok.io/api/telegram/webhook"}'
+     -d '{"url": "https://abc123.ngrok.io/api/telegram"}'
    ```
 
 ---

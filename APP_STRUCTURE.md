@@ -86,7 +86,7 @@
 ## 🤖 Part 3: Telegram Bot
 
 **Who uses it**: Passengers (via Telegram)  
-**Webhook**: `http://localhost:3000/api/telegram/webhook`  
+**Webhook**: `http://localhost:3000/api/telegram`  
 **Setup**: Requires Telegram Bot Token
 
 ### Features:
@@ -147,7 +147,7 @@
 - `/api/eco-points` - Eco-Points system
 - `/api/chat` - Ask Max AI chat
 - `/api/dashboard` - Dashboard data
-- `/api/telegram/webhook` - Telegram bot webhook
+- `/api/telegram` - Telegram bot webhook
 
 ---
 

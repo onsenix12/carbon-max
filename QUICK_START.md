@@ -46,7 +46,7 @@ http://localhost:3000
 ### Telegram Bot
 - **Setup**: Create bot via @BotFather, add token to `.env.local`
 - **Test**: Send `/start` to your bot
-- **Webhook**: http://localhost:3000/api/telegram/webhook
+- **Webhook**: http://localhost:3000/api/telegram
 
 ---
 
@@ -91,7 +91,7 @@ http://localhost:3000
 |------|-------------|-----|
 | **Customer App** | Passengers | `/calculator`, `/journey`, `/rewards` |
 | **Dashboard** | Airport Staff | `/dashboard` |
-| **Telegram Bot** | Passengers (via Telegram) | `/api/telegram/webhook` |
+| **Telegram Bot** | Passengers (via Telegram) | `/api/telegram` |
 
 ---
 
