@@ -5,15 +5,7 @@ const nextConfig = {
   serverComponentsExternalPackages: ['node-telegram-bot-api'],
   webpack: (config, { isServer }) => {
     // Fix for node-telegram-bot-api and its dependencies
-    if (isServer) {
-      // Mark server-only modules as external
-      config.externals = config.externals || [];
-      if (Array.isArray(config.externals)) {
-        config.externals.push('supports-color');
-      } else {
-        config.externals = [config.externals, 'supports-color'];
-      }
-    } else {
+    if (!isServer) {
       // For client-side, ignore server-only modules
       config.resolve.fallback = {
         ...config.resolve.fallback,
